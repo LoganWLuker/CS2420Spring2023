@@ -33,9 +33,14 @@ public class CS2420Class {
 	 * @return true if the student was added, 
 	 *         false if the student was not added because they already exist in the collection
 	 */
-	public boolean addStudent(CS2420Student student) {
-		// FILL IN -- do not return false unless appropriate
-		return false;
+	public boolean addStudent(CS2420Student student) 
+	{
+		if(studentList.contains(student))
+		{
+			return false;
+		}
+		studentList.add(student);
+		return true;
 	}
 	
 	/**
@@ -44,8 +49,13 @@ public class CS2420Class {
 	 * @param uNID - uNID of student to be retrieved
 	 * @return the CS 2420 student with the given uNID, or null if no such student exists in the collection
 	 */
-	public CS2420Student lookup(int uNID) {
-		// FILL IN -- do not return null, unless appropriate
+	public CS2420Student lookup(int uNID) 
+	{
+		for(CS2420Student n : studentList)
+		{
+			if(n.getUNID() == uNID)
+				return n;
+		}
 		return null;
 	}
 	
@@ -56,9 +66,15 @@ public class CS2420Class {
 	 * @return a list of the CS 2420 student(s) with the given contact information (in any order), 
 	 * 	     or an empty list if no such students exist in the collection
 	 */
-	public ArrayList<CS2420Student> lookup(EmailAddress contactInfo) {
-		// FILL IN -- do not return null
-		return null;
+	public ArrayList<CS2420Student> lookup(EmailAddress contactInfo) 
+	{
+		var contactStudents = new ArrayList<CS2420Student>();
+		for(CS2420Student n : studentList)
+		{
+			if(n.getContactInfo().equals(contactInfo))
+				contactStudents.add(n);
+		}
+		return contactStudents;
 	}
 	
 	/**
@@ -71,8 +87,13 @@ public class CS2420Class {
 	 * @param score - the score to be added
 	 * @param category - the category in which to add the score
 	 */
-	public void addScore(int uNID, double score, String category) {
-		// FILL IN
+	public void addScore(int uNID, double score, String category) 
+	{
+		for(CS2420Student n : studentList)
+		{
+			if(n.getUNID() == uNID)
+				n.addScore(score, category);
+		}
 	}
 	
 	/**
@@ -80,9 +101,16 @@ public class CS2420Class {
 	 * 
 	 * @return the average score, or 0 if there are no students in the collection
 	 */
-	public double computeClassAverage() {
-		// FILL IN -- do not return 0, unless appropriate
-		return 0;
+	public double computeClassAverage() 
+	{
+		double classScores = 0;
+		if(studentList.size() == 0)
+			return 0;
+		for(CS2420Student n : studentList)
+		{
+			classScores += n.computeFinalScore();
+		}
+		return classScores/(double)studentList.size();
 	}
 	
 	/**
@@ -90,9 +118,16 @@ public class CS2420Class {
 	 *
 	 * @return the duplicate-free list of contact information, in any order
 	 */
-	public ArrayList<EmailAddress> getContactList() {
-		// FILL IN -- do not return null
-		return null;
+	public ArrayList<EmailAddress> getContactList() 
+	{
+		var contactInfos = new ArrayList<EmailAddress>();
+		for(CS2420Student n : studentList)
+		{
+			var e = n.getContactInfo();
+			if(!contactInfos.contains(e))
+				contactInfos.add(e);
+		}
+		return contactInfos;
 	}
 	
 	/**

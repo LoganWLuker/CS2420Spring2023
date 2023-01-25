@@ -39,6 +39,7 @@ public class CS2420Student extends UofUStudent
 		double labAv = 0;
 		double quizAv = 0;
 		double totalScore = 0;
+		
 		for(int i = 0; i < assignmentScores.size(); i++)
 			assignAv += assignmentScores.get(i);
 		assignAv = assignAv/assignmentScores.size();
@@ -65,7 +66,14 @@ public class CS2420Student extends UofUStudent
 		if(assignmentScores.size() == 0 || examScores.size() == 0 || labScores.size() == 0 || quizScores.size() == 0)
 			return "N/A";
 		double totalScore = this.computeFinalScore();
-		
-		return "";
+		int[] gradeScores = {60,63,67,70,73,77,80,83,87,90,93,101};
+		String[] gradeLetters = {"E","D-","D","D+","C-","C","C+","B-","B","B+","A-","A"};
+		int i;
+		for(i = 0; i < gradeScores.length; i++)
+		{
+			if(totalScore < gradeScores[i])
+				break;
+		}
+		return gradeLetters[i];
 	}
 }
