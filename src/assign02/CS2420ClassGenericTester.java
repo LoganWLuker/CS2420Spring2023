@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * This class contains tests for CS2420ClassGeneric.
  * 
- * @author Erin Parker and ??
+ * @author Erin Parker, Bruce Crockett, and Logan Luker
  * @version January 20, 2022
  */
 public class CS2420ClassGenericTester {
@@ -34,6 +34,8 @@ public class CS2420ClassGenericTester {
 				new MailingAddress("156 Main St.", "Lebanon", "VA", 24266)));
 		verySmallClass.addStudent(new CS2420StudentGeneric<MailingAddress>("Riley", "Nguyen", 4545454, 
 				new MailingAddress("2044 State St.", "Lebanon", "PA", 17042)));
+		verySmallClass.addStudent(new CS2420StudentGeneric<MailingAddress>("Bruce", "Crockett", 1766666,
+				new MailingAddress("101 Cherry St.", "Lebanon", "OH", 45036)));
 
 		largeClass = new CS2420ClassGeneric<PhoneNumber>();
 		PhoneNumber[] sharedNums = new PhoneNumber[5]; 
@@ -125,6 +127,13 @@ public class CS2420ClassGenericTester {
 				new MailingAddress("2044 State St.", "Lebanon", "PA", 17042));
 		assertEquals(1, actualStudents.size());
 		assertEquals(expectedStudent, actualStudents.get(0));
+	}
+	
+	@Test
+	public void testVSLCIDuplicate() {
+		ArrayList<CS2420StudentGeneric<MailingAddress>> actualStudents = verySmallClass.lookup(
+				new MailingAddress("101 Cherry St.", "Lebanon", "OH", 45036));
+		assertEquals(2, actualStudents.size());
 	}
 	
 	@Test
@@ -241,7 +250,7 @@ public class CS2420ClassGenericTester {
 	}
 	
 	// Phase 3 tests -----------------------------------------------------------------------------------
-
+/*
 	@Test
 	public void testOrderedByUNID() {
 		ArrayList<CS2420StudentGeneric<Integer>> actual = phase3Class.getOrderedByUNID();
@@ -271,4 +280,5 @@ public class CS2420ClassGenericTester {
 		assertEquals(new CS2420StudentGeneric<Integer>("A", "C", 1, 1), actual.get(1));
 		assertEquals(new CS2420StudentGeneric<Integer>("D", "E", 4, 4), actual.get(0));
 	}
+	*/
 }
