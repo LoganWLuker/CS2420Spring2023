@@ -18,10 +18,12 @@ import java.util.ArrayList;
  */
 public class CS2420ClassTester {
 
-	private CS2420Class emptyClass, verySmallClass, smallClass;
+	private CS2420Class emptyClass, verySmallClass, smallClass, largeClass;
+	private CS2420Student testStudent;
 	
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() throws Exception 
+	{
 		emptyClass = new CS2420Class();
 		
 		verySmallClass = new CS2420Class();
@@ -32,10 +34,25 @@ public class CS2420ClassTester {
 		smallClass = new CS2420Class();
 		smallClass.addAll("src/assign02/a_small_2420_class.txt");
 		
-		// FILL IN -- Extend this tester to add more tests for the CS 2420 classes above, as well as to
-		// create and test larger CS 2420 classes.
-		// (HINT: For larger CS 2420 classes, generate random names, uNIDs, contact info, and scores in a 
-		// loop, instead of typing one at a time.)
+		largeClass = new CS2420Class();
+		testStudent = new CS2420Student("Logan","Luker", 12345678,new EmailAddress("feefoo","gmail.com"));
+		String randFirst,randLast;
+		int randUNID;
+		EmailAddress randEmail;
+		
+		for(int i = 0; i<1000; i++)
+		{
+			if(i == 250)
+			{
+				largeClass.addStudent(testStudent);
+				continue;
+			}
+			randFirst = ((Double)(Math.random()*9999999)).toString();
+			randLast = ((Double)(Math.random()*9999999)).toString();
+			randUNID = (int)(Math.random()*9999999);
+			randEmail = new EmailAddress(((Double)(Math.random()*9999999)).toString(), "gmail.com");
+			largeClass.addStudent(new CS2420Student(randFirst,randLast,randUNID,randEmail));
+		}
 	}
 	
 	// Empty CS 2420 class tests --------------------------------------------------------------------------
@@ -195,5 +212,69 @@ public class CS2420ClassTester {
 	@Test
 	public void testSmallComputeClassAverage() {
 		assertEquals(78.356, smallClass.computeClassAverage(), 0.001);
+	}
+	// More Tests --------------------------------------------------------------------------------------
+	
+	@Test
+	public void testVerySmallStudentFinalGradeEdgeCase1() 
+	{
+		CS2420Student student = verySmallClass.lookup(2323232);
+		student.addScore(0, "assignment");
+		student.addScore(75, "exam");
+		student.addScore(0, "lab");
+		student.addScore(0, "quiz");
+		student.addScore(0, "assignment");
+		student.addScore(0, "lab");
+		student.addScore(0, "quiz");
+		assertEquals("E", student.computeFinalGrade());
+	}
+	@Test
+	public void testVerySmallStudentFinalGradeEdgeCase2() 
+	{
+		CS2420Student student = verySmallClass.lookup(2323232);
+		student.addScore(100, "assignment");
+		student.addScore(100, "exam");
+		student.addScore(100, "lab");
+		student.addScore(100, "quiz");
+		student.addScore(100, "assignment");
+		student.addScore(100, "lab");
+		student.addScore(100, "quiz");
+		assertEquals("A", student.computeFinalGrade());
+	}
+	@Test
+	public void testSmallStudentFinalGrade() 
+	{
+		CS2420Student student = smallClass.lookup(111111);
+		assertEquals("B", student.computeFinalGrade());
+	}
+	// Large CS 2420 class tests -------------------------------------------------------------------------
+	@Test
+	public void testLargeStudentFinalScore() 
+	{
+		CS2420Student student = largeClass.lookup(12345678);
+		student.addScore(86.5, "assignment");
+		student.addScore(55, "exam");
+		student.addScore(90, "lab");
+		student.addScore(89.2, "quiz");
+		student.addScore(99, "assignment");
+		student.addScore(80, "lab");
+		student.addScore(77.7, "quiz");	
+		assertEquals(55, student.computeFinalScore(), 0.001);
+	}
+	@Test
+	public void testLargeStudentFinalScore0() 
+	{
+		CS2420Student student = largeClass.lookup(12345678);
+		student.addScore(86.5, "assignment");
+		student.addScore(75, "exam");
+		student.addScore(89.2, "quiz");
+		assertEquals(0, student.computeFinalScore(), 0);
+	}
+	@Test
+	public void testLargeLookupUNID() 
+	{
+		UofUStudent expected = new CS2420Student("Logan","Luker", 12345678,new EmailAddress("feefoo","gmail.com"));
+		CS2420Student actual = largeClass.lookup(12345678);
+		assertEquals(expected, actual);
 	}
 }
