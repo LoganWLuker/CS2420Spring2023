@@ -23,6 +23,11 @@ public class CS2420StudentGeneric<Type> extends UofUStudent
 	{
 		return this.contact;
 	}
+	/**
+	 * add a score to the student
+	 * @param score
+	 * @param category
+	 */
 	public void addScore(double score, String category)
 	{
 		switch (category) {
@@ -37,6 +42,10 @@ public class CS2420StudentGeneric<Type> extends UofUStudent
 			default: break;
 		}
 	}
+	/**
+	 * compute the final score based on the scores and types
+	 * @return final score as a double
+	 */
 	public double computeFinalScore() 
 	{
 		if(assignmentScores.size() == 0 || examScores.size() == 0 || labScores.size() == 0 || quizScores.size() == 0)
@@ -68,6 +77,10 @@ public class CS2420StudentGeneric<Type> extends UofUStudent
 		totalScore = (0.40*assignAv) + (0.40*examAv) + (0.10*labAv) + (0.10*quizAv);
 		return totalScore;
 	}
+	/**
+	 * computes the final grade based on the syllabus
+	 * @return the final letter grade as a string
+	 */
 	public String computeFinalGrade()
 	{
 		if(assignmentScores.size() == 0 || examScores.size() == 0 || labScores.size() == 0 || quizScores.size() == 0)
