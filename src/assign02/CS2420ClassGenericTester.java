@@ -59,9 +59,9 @@ public class CS2420ClassGenericTester {
 		}
 		
 		phase3Class = new CS2420ClassGeneric<Integer>();
-		phase3Class.addStudent(new CS2420StudentGeneric<Integer>("A", "C", 3, 3));
-		phase3Class.addStudent(new CS2420StudentGeneric<Integer>("A", "B", 2, 2));
 		phase3Class.addStudent(new CS2420StudentGeneric<Integer>("A", "C", 1, 1));
+		phase3Class.addStudent(new CS2420StudentGeneric<Integer>("A", "B", 2, 2));
+		phase3Class.addStudent(new CS2420StudentGeneric<Integer>("A", "C", 3, 3));
 		phase3Class.addStudent(new CS2420StudentGeneric<Integer>("D", "E", 4, 4));
 		phase3Class.addScore(1, 70, "assignment");
 		phase3Class.addScore(1, 70, "exam");
@@ -250,7 +250,7 @@ public class CS2420ClassGenericTester {
 	}
 	
 	// Phase 3 tests -----------------------------------------------------------------------------------
-/*
+
 	@Test
 	public void testOrderedByUNID() {
 		ArrayList<CS2420StudentGeneric<Integer>> actual = phase3Class.getOrderedByUNID();
@@ -275,10 +275,10 @@ public class CS2420ClassGenericTester {
 	public void testOrderedByScore() {
 		ArrayList<CS2420StudentGeneric<Integer>> actual = phase3Class.getOrderedByScore(0);
 		assertEquals(4, actual.size());
+		assertEquals(new CS2420StudentGeneric<Integer>("D", "E", 4, 4), actual.get(0));
+		assertEquals(new CS2420StudentGeneric<Integer>("A", "C", 1, 1), actual.get(1));
 		assertEquals(new CS2420StudentGeneric<Integer>("A", "C", 3, 3), actual.get(2));
 		assertEquals(new CS2420StudentGeneric<Integer>("A", "B", 2, 2), actual.get(3));
-		assertEquals(new CS2420StudentGeneric<Integer>("A", "C", 1, 1), actual.get(1));
-		assertEquals(new CS2420StudentGeneric<Integer>("D", "E", 4, 4), actual.get(0));
 	}
-	*/
+	
 }

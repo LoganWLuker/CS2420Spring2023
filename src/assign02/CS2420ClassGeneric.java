@@ -10,13 +10,24 @@ import java.util.Comparator;
  * @version January 20, 2022
  */
 public class CS2420ClassGeneric<Type> {
+	
+	private ArrayList<CS2420StudentGeneric<Type>> studentList;
+	
+	/**
+	 * Creates an empty CS 2420 Generic class.
+	 */
+	public CS2420ClassGeneric() 
+	{
+		this.studentList = new ArrayList<CS2420StudentGeneric<Type>>();
+	}
 	/**
 	 * Returns the list of CS 2420 students in this class, sorted by uNID in ascending order.
 	 */
-	public ArrayList<CS2420StudentGeneric<Type>> getOrderedByUNID() {
+	public ArrayList<CS2420StudentGeneric<Type>> getOrderedByUNID() 
+	{
 	    ArrayList<CS2420StudentGeneric<Type>> studentListCopy = new ArrayList<CS2420StudentGeneric<Type>>();
 	    for(CS2420StudentGeneric<Type> student : studentList)
-	   	 studentListCopy.add(student);
+	    	studentListCopy.add(student);
 
 	    sort(studentListCopy, new OrderByUNID());
 
@@ -46,14 +57,15 @@ public class CS2420ClassGeneric<Type> {
 	 * @param cutoffScore - value that a student's final score must be at or above to be included
 	 *                      in the returned list
 	 */
-	public ArrayList<CS2420StudentGeneric<Type>> getOrderedByScore(double cutoffScore) {
-	    ArrayList<CS2420StudentGeneric<Type>> studentListCopy = new ArrayList<CS2420StudentGeneric<Type>>();
+	public ArrayList<CS2420StudentGeneric<Type>> getOrderedByScore(double cutoffScore) 
+	{
+	    var studentListCopy = new ArrayList<CS2420StudentGeneric<Type>>();
 	    for(CS2420StudentGeneric<Type> student : studentList)
-	    	if(student.computeFinalScore() > cutoffScore)
+	    	if(student.computeFinalScore() >= cutoffScore)
 	    		studentListCopy.add(student);
 	    
 	    sort(studentListCopy, new OrderByScore());
-	    return null;
+	    return studentListCopy;
 	}
 
 	/**
@@ -64,13 +76,13 @@ public class CS2420ClassGeneric<Type> {
 	 * 3. Reconsiders the list be the remaining unsorted portion (second item to Nth item) and 
 	 *    repeats steps 1, 2, and 3.
 	 */
-	private static <ListType> void sort(ArrayList<ListType> list, Comparator<ListType> c) {
+	private static <Type> void sort(ArrayList<Type> list, Comparator<Type> c) {
 		for(int i = 0; i < list.size() - 1; i++) {
 			int j, minIndex;
 			for(j = i + 1, minIndex = i; j < list.size(); j++)
 				if(c.compare(list.get(j), list.get(minIndex)) < 0)
 					minIndex = j;
-			ListType temp = list.get(i);
+			Type temp = list.get(i);
 			list.set(i, list.get(minIndex));
 			list.set(minIndex, temp);
 		}
@@ -80,14 +92,15 @@ public class CS2420ClassGeneric<Type> {
 	 * Comparator that defines an ordering among CS 2420 students using their uNIDs.
 	 * uNIDs are guaranteed to be unique, making a tie-breaker unnecessary.
 	 */
-	protected class OrderByUNID implements Comparator<CS2420StudentGeneric<Type>> {
-
+	protected class OrderByUNID implements Comparator<CS2420StudentGeneric<Type>> 
+	{
 		/**
 		 * Returns a negative value if lhs (left-hand side) is smaller than rhs (right-hand side). 
 		 * Returns a positive value if lhs is larger than rhs. 
 		 * Returns 0 if lhs and rhs are equal.
 		 */
-		public int compare(CS2420StudentGeneric<Type> lhs, CS2420StudentGeneric<Type> rhs) {
+		public int compare(CS2420StudentGeneric<Type> lhs, CS2420StudentGeneric<Type> rhs) 
+		{
 			return lhs.getUNID() - rhs.getUNID();
 		}
 	}
@@ -117,24 +130,17 @@ public class CS2420ClassGeneric<Type> {
 	
 	protected class OrderByScore implements Comparator<CS2420StudentGeneric<Type>>{
 		
-		public int compare(CS2420StudentGeneric<Type> o1, CS2420StudentGeneric<Type> o2) {
-			
+		public int compare(CS2420StudentGeneric<Type> o1, CS2420StudentGeneric<Type> o2) 
+		{
 			if(!(o1.computeFinalScore() == o2.computeFinalScore()))
-				return Double.compare(o1.computeFinalScore(), o2.computeFinalScore());
+				return -Double.compare(o1.computeFinalScore(), o2.computeFinalScore());
 			return o1.getUNID() - o2.getUNID();
 		}
 		
 	}
 	
 
-	private ArrayList<CS2420StudentGeneric<Type>> studentList;
 	
-	/**
-	 * Creates an empty CS 2420 Generic class.
-	 */
-	public CS2420ClassGeneric() {
-		this.studentList = new ArrayList<CS2420StudentGeneric<Type>>();
-	}
 	
 	/**
 	 * Adds the given student to the collection of students in CS 2420, avoiding duplicates.

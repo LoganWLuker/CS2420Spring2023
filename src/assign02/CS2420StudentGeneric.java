@@ -17,7 +17,7 @@ public class CS2420StudentGeneric<Type> extends UofUStudent
 	public CS2420StudentGeneric(String firstName, String lastName, int uNID, Type contactInfo)
 	{
 		super(firstName,lastName,uNID);
-		this.contact = (Type) contactInfo;
+		this.contact = contactInfo;
 	}
 	public Type getContactInfo()
 	{
