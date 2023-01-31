@@ -67,7 +67,7 @@ public class CS2420ClassTimer
 			double averageTime = ((midpointTime - startTime) - (stopTime - midpointTime)) / 
 					(double) timesToLoop;
 
-			System.out.println(n + "\t" + averageTime);
+			System.out.println(averageTime);
 
 		}
 
