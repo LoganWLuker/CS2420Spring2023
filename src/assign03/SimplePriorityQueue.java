@@ -8,19 +8,34 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 {
 	private E[] queue;
 	private int currentSize;
+	private Comparator<? super E> cmp;
 
 	@SuppressWarnings("unchecked")
-	public SimplePriorityQueue() {
-		queue = (E[]) new Object[32];
+	public SimplePriorityQueue() //tested
+	{
+		queue = (E[]) new Object[16];
+		currentSize = 0;
 	}
 	
-	public SimplePriorityQueue(Comparator<? super E> cmp) {
-		
+	@SuppressWarnings("unchecked")
+	public SimplePriorityQueue(Comparator<? super E> cmp)
+	{
+		queue = (E[]) new Object[16];
+		currentSize = 0;
+		this.cmp = cmp;
 	}
-	
+	@SuppressWarnings("unchecked")
+	private int compare(E ob1, E ob2) 
+	{
+		if(cmp == null)
+		{
+			return ((Comparable<? super E>)ob1).compareTo(ob2);
+		}
+		return cmp.compare(ob1, ob2);
+	}
 	@Override
-	public E findMax() throws NoSuchElementException {
-		
+	public E findMax() throws NoSuchElementException //tested
+	{
 		// test for empty array
 		if(queue[0] == null)
 			throw new NoSuchElementException("Array is empty");
@@ -37,7 +52,8 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 	}
 
 	@Override
-	public E deleteMax() throws NoSuchElementException {
+	public E deleteMax() throws NoSuchElementException //tested
+	{
 		
 		// test for empty array
 		if(queue[0] == null)
@@ -45,23 +61,30 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 		
 		// loop through array looking for null elements,
 		// if found, return previous entry
-		for (int i = 1; i < queue.length; i++) {
-			if (queue[i] == null) {
+		for (int i = 1; i < queue.length; i++) 
+		{
+			if (queue[i] == null)
+			{
 				E toReturn = queue[i-1];
 				queue[i-1] = null;
+				currentSize --;
 				return toReturn;
 			}
 		}
-		
 		return null;
 	}
 
 	@Override
-	public void insert(E item) {
+	public void insert(E item) //tested
+	{
 		
 		if(queue[0] == null)
+		{
 			queue[0] = item;
-		int pos = binSearch(item)+1;
+			currentSize ++;
+			return;
+		}
+		int pos = binSearch(item);
 		// check to see if array is full, and create a doubled array
 		// if so
 		
@@ -75,60 +98,30 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 			
 			this.queue = nextArray;
 		}
-			
-		
+
 		// move everything >= pos up by 1
 		@SuppressWarnings("unchecked")
 		E[] placeArr = (E[]) new Object[queue.length];
 		
-		for (int i = 0; i < pos - 1; i++) {
+		for (int i = 0; i < pos; i++)
+		{
 			placeArr[i] = queue[i];
 		}
 		
-		placeArr[pos-1] = item;
+		placeArr[pos] = item;
 		
-		for (int i = pos; i < queue.length; i++) {
-			placeArr[i] = queue[i-1];	
+		for (int i = pos+1; i < queue.length; i++) 
+		{
+			placeArr[i] = queue[i-1];
 		}
 		
 		queue = placeArr;
-		
-		
-		/*
-		// test for empty array
-		if(queue[0] == null)
-			queue[0] = item;
-				
-		// loop through array looking for null elements,
-		// if found, insert item
-		for (int i = 1; i < queue.length; i++) {
-			if (queue[i] == null)
-				queue[i] = item;
-		}
-		
-		// create a new array that is double the size, and insert item
-		// at the next element
-		@SuppressWarnings("unchecked")
-		E[] nextArray = (E[]) new Object[queue.length*2];
-		
-		for(int i = 0; i < queue.length; i++) {
-			nextArray[i] = queue[i];
-		}
-		
-		nextArray[queue.length] = item;
-		this.queue = nextArray;
-		*/
-		
-		
+		currentSize ++;
 		
 	}
 	
-	@SuppressWarnings("unchecked")
-	public int binSearch(E item)
+	public int binSearch(E item) //tested
 	{
-//		if(queue[0] == null)
-//			return 0;
-		
 		// determine the 'cutoff' position, pos
 		int low = 0, high = queue.length - 1, mid = 0;
 		while(low <= high)
@@ -136,16 +129,16 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 			mid = (low + high) / 2;
 			if(item.equals(queue[mid]))
 				return mid;
-			if(((Comparable<? super E>)item).compareTo(queue[mid]) < 0)
+			if(queue[mid] == null || compare(item,queue[mid]) < 0)
 				high = mid - 1;
 			else
 				low = mid + 1;
 		}
-		return mid;
+		return low;
 	}
 
 	@Override
-	public void insertAll(Collection<? extends E> coll) 
+	public void insertAll(Collection<? extends E> coll) //tested
 	{
 		for(E item : coll) 
 		{
@@ -154,27 +147,33 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 	}
 
 	@Override
-	public boolean contains(E item) 
+	public boolean contains(E item) //tested
 	{
-		// TODO Auto-generated method stub
+		if(item == queue[binSearch(item)])
+			return true;
 		return false;
 	}
 
 	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int size() //tested
+	{
+		return this.currentSize;
 	}
 
 	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
+	public boolean isEmpty() //tested
+	{
+		if(currentSize == 0)
+			return true;
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
+	public void clear() //tested
+	{
+		currentSize = 0;
+		queue = (E[]) new Object[32];
 		
 	}
 
