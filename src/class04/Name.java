@@ -54,21 +54,21 @@ public class Name implements Comparable<Name>{
 
         //anonymous, inline class. This defines a nameless class and creates
         //an object of that type
-        /*Collections.sort(names, new Comparator<Name>(){
+        Collections.sort(names, new Comparator<Name>(){
             @Override
             public int compare(Name o1, Name o2) {
                 return o1.first.compareTo(o2.first);
             }
-        });*/
+        });
 
         //same as previous but uses the "lambda function" syntax
         //The compiler figures out what interface this should be and
         //what method is being implemented by looking at the type
         //of the 2nd parameter to Sort.  In this case it infers that the
         //lambda method here is Comparator<Name>.compare(Name, Name)
-        /*Collections.sort(names, (Name n1, Name n2) -> {
+        Collections.sort(names, (Name n1, Name n2) -> {
             return n1.first.compareTo(n2.first);
-        });*/
+        });
 
         //same as previous but the compiler infers that n1 and n2 parameters
         //are both of type Name.  The expression after the -> is the return

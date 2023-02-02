@@ -11,7 +11,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 	private Comparator<? super E> cmp;
 
 	@SuppressWarnings("unchecked")
-	public SimplePriorityQueue() //tested
+	public SimplePriorityQueue()
 	{
 		queue = (E[]) new Object[16];
 		currentSize = 0;
@@ -34,7 +34,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 		return cmp.compare(ob1, ob2);
 	}
 	@Override
-	public E findMax() throws NoSuchElementException //tested
+	public E findMax() throws NoSuchElementException
 	{
 		// test for empty array
 		if(queue[0] == null)
@@ -52,7 +52,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 	}
 
 	@Override
-	public E deleteMax() throws NoSuchElementException //tested
+	public E deleteMax() throws NoSuchElementException
 	{
 		
 		// test for empty array
@@ -75,7 +75,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 	}
 
 	@Override
-	public void insert(E item) //tested
+	public void insert(E item)
 	{
 		
 		if(queue[0] == null)
@@ -120,7 +120,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 		
 	}
 	
-	public int binSearch(E item) //tested
+	public int binSearch(E item)
 	{
 		// determine the 'cutoff' position, pos
 		int low = 0, high = queue.length - 1, mid = 0;
@@ -138,7 +138,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 	}
 
 	@Override
-	public void insertAll(Collection<? extends E> coll) //tested
+	public void insertAll(Collection<? extends E> coll)
 	{
 		for(E item : coll) 
 		{
@@ -147,7 +147,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 	}
 
 	@Override
-	public boolean contains(E item) //tested
+	public boolean contains(E item)
 	{
 		if(item == queue[binSearch(item)])
 			return true;
@@ -155,13 +155,13 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 	}
 
 	@Override
-	public int size() //tested
+	public int size()
 	{
 		return this.currentSize;
 	}
 
 	@Override
-	public boolean isEmpty() //tested
+	public boolean isEmpty()
 	{
 		if(currentSize == 0)
 			return true;
@@ -170,7 +170,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void clear() //tested
+	public void clear()
 	{
 		currentSize = 0;
 		queue = (E[]) new Object[32];
