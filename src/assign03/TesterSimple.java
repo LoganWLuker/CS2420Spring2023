@@ -1,36 +1,23 @@
 package assign03;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.NoSuchElementException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import class04.Name;
-
 class TesterSimple 
 {
-	
-	private SimplePriorityQueue<Integer> iQueue;
-	private SimplePriorityQueue<Point> pQueue;
 	private boolean runtimeFlagMedium, runtimeFlagLarge;
 
 	@BeforeEach
 	void setup() 
-	{
-		iQueue = new SimplePriorityQueue<Integer>();
-		pQueue = new SimplePriorityQueue<Point>();
-		
+	{	
 		// Change this depending on if you want to run the longer tests, or more 'expensive' tests.
 		// TRUE runs the expensive tests.
-		runtimeFlagMedium = false;
-		runtimeFlagLarge = false;
+		runtimeFlagMedium = true;
+		runtimeFlagLarge = true;
 	}
 	//Throw Tests ------------------------------------------
 	@Test
@@ -93,10 +80,10 @@ class TesterSimple
 		testQueue.insert(2);
 		testQueue.insert(8);
 		testQueue.insert(6);
-		assertEquals(0,testQueue.binSearch(2));
-		assertEquals(1,testQueue.binSearch(4));
-		assertEquals(2,testQueue.binSearch(6));
-		assertEquals(3,testQueue.binSearch(8));
+		assertEquals(2,testQueue.getElement(0));
+		assertEquals(4,testQueue.getElement(1));
+		assertEquals(6,testQueue.getElement(2));
+		assertEquals(8,testQueue.getElement(3));
 	}
 	@Test
 	void testInsertString()
@@ -106,10 +93,10 @@ class TesterSimple
 		testQueue.insert("ava");
 		testQueue.insert("dan");
 		testQueue.insert("connor");
-		assertEquals(0,testQueue.binSearch("ava"));
-		assertEquals(1,testQueue.binSearch("ben"));
-		assertEquals(2,testQueue.binSearch("connor"));
-		assertEquals(3,testQueue.binSearch("dan"));
+		assertEquals("ava",testQueue.getElement(0));
+		assertEquals("ben",testQueue.getElement(1));
+		assertEquals("connor",testQueue.getElement(2));
+		assertEquals("dan",testQueue.getElement(3));
 	}
 	@Test
 	void testInsertIntegerFull()
@@ -134,10 +121,10 @@ class TesterSimple
 		testQueue.insert(16);
 		testQueue.insert(17);
 		testQueue.insert(18);
-		assertEquals(11,testQueue.binSearch(11));
-		assertEquals(12,testQueue.binSearch(12));
-		assertEquals(13,testQueue.binSearch(13));
-		assertEquals(14,testQueue.binSearch(14));
+		assertEquals(11,testQueue.getElement(11));
+		assertEquals(12,testQueue.getElement(12));
+		assertEquals(13,testQueue.getElement(13));
+		assertEquals(14,testQueue.getElement(14));
 	}
 	@Test
 	void testInsertStringFull()
@@ -161,10 +148,89 @@ class TesterSimple
 		testQueue.insert("p");
 		testQueue.insert("q");
 		testQueue.insert("r");
+		assertEquals("o",testQueue.getElement(14));
+		assertEquals("p",testQueue.getElement(15));
+		assertEquals("q",testQueue.getElement(16));
+		assertEquals("r",testQueue.getElement(17));
+	}
+	//binSearch Tests -----------------------------------------
+	@Test
+	void testBinSearchInteger()
+	{
+		var testQueue = new SimplePriorityQueue<Integer>();
+		assertEquals(0,testQueue.binSearch(-1));
+		testQueue.insert(4);
+		testQueue.insert(2);
+		testQueue.insert(8);
+		testQueue.insert(6);
+		assertEquals(0,testQueue.binSearch(2));
+		assertEquals(1,testQueue.binSearch(4));
+		assertEquals(2,testQueue.binSearch(6));
+		assertEquals(3,testQueue.binSearch(8));
+	}
+	@Test
+	void testBinSearchString()
+	{
+		var testQueue = new SimplePriorityQueue<String>();
+		assertEquals(0,testQueue.binSearch("not in queue"));
+		testQueue.insert("ben");
+		testQueue.insert("ava");
+		testQueue.insert("dan");
+		testQueue.insert("connor");
+		assertEquals(0,testQueue.binSearch("ava"));
+		assertEquals(1,testQueue.binSearch("ben"));
+		assertEquals(2,testQueue.binSearch("connor"));
+		assertEquals(3,testQueue.binSearch("dan"));
+	}
+	@Test
+	void testBinSearchIntegerFull()
+	{
+		var testQueue = new SimplePriorityQueue<Integer>();
+		testQueue.insert(0);
+		testQueue.insert(1);
+		testQueue.insert(2);
+		testQueue.insert(3);
+		testQueue.insert(11);
+		testQueue.insert(12);
+		testQueue.insert(13);
+		testQueue.insert(14);
+		testQueue.insert(4);
+		testQueue.insert(5);
+		testQueue.insert(6);
+		testQueue.insert(7);
+		testQueue.insert(8);
+		testQueue.insert(9);
+		testQueue.insert(10);
+		testQueue.insert(15);
+		assertEquals(11,testQueue.binSearch(11));
+		assertEquals(12,testQueue.binSearch(12));
+		assertEquals(13,testQueue.binSearch(13));
+		assertEquals(14,testQueue.binSearch(14));
+	}
+	@Test
+	void testBinSearchStringFull()
+	{
+		var testQueue = new SimplePriorityQueue<String>();
+		testQueue.insert("d");
+		testQueue.insert("e");
+		testQueue.insert("f");
+		testQueue.insert("g");
+		testQueue.insert("h");
+		testQueue.insert("i");
+		testQueue.insert("j");
+		testQueue.insert("k");
+		testQueue.insert("l");
+		testQueue.insert("a");
+		testQueue.insert("b");
+		testQueue.insert("c");
+		testQueue.insert("m");
+		testQueue.insert("n");
+		testQueue.insert("o");
+		testQueue.insert("p");
+		assertEquals(12,testQueue.binSearch("m"));
+		assertEquals(13,testQueue.binSearch("n"));
 		assertEquals(14,testQueue.binSearch("o"));
 		assertEquals(15,testQueue.binSearch("p"));
-		assertEquals(16,testQueue.binSearch("q"));
-		assertEquals(17,testQueue.binSearch("r"));
 	}
 	//size Tests ---------------------------------------
 	@Test
@@ -563,20 +629,23 @@ class TesterSimple
 	@Test
 	void testMediumArray()
 	{
-		if(runtimeFlagMedium) {
+		if(runtimeFlagMedium) 
+		{
 			
 		var testQueue = new SimplePriorityQueue<Integer>();
 		//create an array from 'jumbled up' input
-		for(int i = 250; i > 0; i--) {
-			for(int j = 0; j < 3; j++) {
+		for(int i = 250; i > 0; i--) 
+		{
+			for(int j = 0; j < 3; j++) 
+			{
 				testQueue.insert(i*j-1);
 			}
 		}
 		assertEquals(testQueue.getElement(0), -1);
-		assertEquals(testQueue.getElement(testQueue.getCurrentSize()-1), 499);
-		assertEquals(testQueue.getElement(testQueue.getCurrentSize()-2), 497);
-		assertEquals(testQueue.getElement(testQueue.getCurrentSize()-3), 495);
-		assertEquals(testQueue.getElement(testQueue.getCurrentSize()-4), 493);
+		assertEquals(testQueue.getElement(testQueue.size()-1), 499);
+		assertEquals(testQueue.getElement(testQueue.size()-2), 497);
+		assertEquals(testQueue.getElement(testQueue.size()-3), 495);
+		assertEquals(testQueue.getElement(testQueue.size()-4), 493);
 		}
 	}
 	
@@ -589,9 +658,12 @@ class TesterSimple
 			
 			//create an array from 'jumbled up' input
 			
-			for(int i = 1000; i > 0; i--) {
-				for(int j = 1; j < 3; j++) {
-					for (int k = 4; k < 6; k++) {
+			for(int i = 1000; i > 0; i--) 
+			{
+				for(int j = 1; j < 3; j++) 
+				{
+					for (int k = 4; k < 6; k++) 
+					{
 						testQueue.insert(i + j + k);
 					}
 				}
@@ -601,12 +673,6 @@ class TesterSimple
 			assertEquals(testQueue.getElement(3999), 1007);
 			assertEquals(testQueue.getElement(3998), 1006);
 			assertEquals(testQueue.getElement(3997), 1006);
-			
-			testQueue.printContents();
-			System.out.println("Array is of size " + testQueue.getCurrentSize());
 		}
-	}
-	
-	
-	
+	}	
 }

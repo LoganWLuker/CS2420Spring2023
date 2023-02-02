@@ -10,13 +10,19 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 	private int currentSize;
 	private Comparator<? super E> cmp;
 
+	/**
+	 * Default Constructor
+	 */
 	@SuppressWarnings("unchecked")
 	public SimplePriorityQueue()
 	{
 		queue = (E[]) new Object[32];
 		currentSize = 0;
 	}
-	
+	/**
+	 * Constructor with Comparator
+	 * @param cmp	the comparator to use for insertions
+	 */
 	@SuppressWarnings("unchecked")
 	public SimplePriorityQueue(Comparator<? super E> cmp)
 	{
@@ -24,12 +30,27 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 		currentSize = 0;
 		this.cmp = cmp;
 	}
+	/**
+	 * 
+	 * @param ob1
+	 * @param ob2
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	private int compare(E ob1, E ob2) 
 	{
 		if(cmp == null)
 		{
-			return ((Comparable<? super E>)ob1).compareTo(ob2);
+			int toReturn;
+			try
+			{
+				toReturn = ((Comparable<? super E>)ob1).compareTo(ob2);
+			}
+			catch(Exception e)
+			{
+				throw new NoSuchElementException("This object doesn't have a default comparison. Construct with a comparator");
+			}
+			return toReturn;
 		}
 		return cmp.compare(ob1, ob2);
 	}
@@ -160,26 +181,13 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 		
 	}
 	
-	// Helper method for running tests; in the real world this
-	// would definitely be deleted.
-	public E getElement(int pos) {
+	/**
+	 * Retrieve an element from the queue
+	 * @param pos	position of element in queue
+	 * @return The element at given position
+	 */
+	public E getElement(int pos) 
+	{
 		return queue[pos];
 	}
-	
-	// Helper method for running tests; in the real world this
-	// would definitely be deleted.
-	public int getCurrentSize() {
-		return this.currentSize;
-	}
-	
-	// Helper method for running tests; in the real world this
-	// would definitely be deleted.
-	// assumes E is of the Integer type
-	public void printContents() {
-		for(int i=0; i < queue.length; i++) {
-			if(!(queue[i] == null))
-				System.out.println(((Integer) queue[i]).intValue());
-		}
-	}
-
 }
