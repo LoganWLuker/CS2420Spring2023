@@ -13,14 +13,14 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 	@SuppressWarnings("unchecked")
 	public SimplePriorityQueue()
 	{
-		queue = (E[]) new Object[16];
+		queue = (E[]) new Object[32];
 		currentSize = 0;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public SimplePriorityQueue(Comparator<? super E> cmp)
 	{
-		queue = (E[]) new Object[16];
+		queue = (E[]) new Object[32];
 		currentSize = 0;
 		this.cmp = cmp;
 	}
@@ -40,15 +40,7 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 		if(queue[0] == null)
 			throw new NoSuchElementException("Array is empty");
 		
-		// loop through array looking for null elements,
-		// if found, return previous entry
-		for (int i = 1; i < queue.length; i++) {
-			if (queue[i] == null)
-				return queue[i-1];
-		}
-		
-		// array is full, return largest value
-		return queue[queue.length - 1];
+		return queue[currentSize-1];
 	}
 
 	@Override
@@ -59,19 +51,10 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 		if(queue[0] == null)
 			throw new NoSuchElementException("Array is empty");
 		
-		// loop through array looking for null elements,
-		// if found, return previous entry
-		for (int i = 1; i < queue.length; i++) 
-		{
-			if (queue[i] == null)
-			{
-				E toReturn = queue[i-1];
-				queue[i-1] = null;
-				currentSize --;
-				return toReturn;
-			}
-		}
-		return null;
+		E toReturn = queue[currentSize-1];
+		queue[currentSize-1] = null;
+		currentSize--;
+		return toReturn;
 	}
 
 	@Override
@@ -175,6 +158,28 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 		currentSize = 0;
 		queue = (E[]) new Object[32];
 		
+	}
+	
+	// Helper method for running tests; in the real world this
+	// would definitely be deleted.
+	public E getElement(int pos) {
+		return queue[pos];
+	}
+	
+	// Helper method for running tests; in the real world this
+	// would definitely be deleted.
+	public int getCurrentSize() {
+		return this.currentSize;
+	}
+	
+	// Helper method for running tests; in the real world this
+	// would definitely be deleted.
+	// assumes E is of the Integer type
+	public void printContents() {
+		for(int i=0; i < queue.length; i++) {
+			if(!(queue[i] == null))
+				System.out.println(((Integer) queue[i]).intValue());
+		}
 	}
 
 }

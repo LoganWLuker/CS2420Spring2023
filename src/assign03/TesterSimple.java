@@ -19,12 +19,18 @@ class TesterSimple
 	
 	private SimplePriorityQueue<Integer> iQueue;
 	private SimplePriorityQueue<Point> pQueue;
+	private boolean runtimeFlagMedium, runtimeFlagLarge;
 
 	@BeforeEach
 	void setup() 
 	{
 		iQueue = new SimplePriorityQueue<Integer>();
 		pQueue = new SimplePriorityQueue<Point>();
+		
+		// Change this depending on if you want to run the longer tests, or more 'expensive' tests.
+		// TRUE runs the expensive tests.
+		runtimeFlagMedium = false;
+		runtimeFlagLarge = false;
 	}
 	//Throw Tests ------------------------------------------
 	@Test
@@ -113,6 +119,10 @@ class TesterSimple
 		testQueue.insert(1);
 		testQueue.insert(2);
 		testQueue.insert(3);
+		testQueue.insert(11);
+		testQueue.insert(12);
+		testQueue.insert(13);
+		testQueue.insert(14);
 		testQueue.insert(4);
 		testQueue.insert(5);
 		testQueue.insert(6);
@@ -120,26 +130,19 @@ class TesterSimple
 		testQueue.insert(8);
 		testQueue.insert(9);
 		testQueue.insert(10);
-		testQueue.insert(11);
-		testQueue.insert(12);
-		testQueue.insert(13);
-		testQueue.insert(14);
 		testQueue.insert(15);
 		testQueue.insert(16);
 		testQueue.insert(17);
 		testQueue.insert(18);
-		assertEquals(15,testQueue.binSearch(15));
-		assertEquals(16,testQueue.binSearch(16));
-		assertEquals(17,testQueue.binSearch(17));
-		assertEquals(18,testQueue.binSearch(18));
+		assertEquals(11,testQueue.binSearch(11));
+		assertEquals(12,testQueue.binSearch(12));
+		assertEquals(13,testQueue.binSearch(13));
+		assertEquals(14,testQueue.binSearch(14));
 	}
 	@Test
 	void testInsertStringFull()
 	{
 		var testQueue = new SimplePriorityQueue<String>();
-		testQueue.insert("a");
-		testQueue.insert("b");
-		testQueue.insert("c");
 		testQueue.insert("d");
 		testQueue.insert("e");
 		testQueue.insert("f");
@@ -149,6 +152,9 @@ class TesterSimple
 		testQueue.insert("j");
 		testQueue.insert("k");
 		testQueue.insert("l");
+		testQueue.insert("a");
+		testQueue.insert("b");
+		testQueue.insert("c");
 		testQueue.insert("m");
 		testQueue.insert("n");
 		testQueue.insert("o");
@@ -188,6 +194,7 @@ class TesterSimple
 		testQueue.insert(2);
 		testQueue.insert(3);
 		testQueue.insert(4);
+		assertEquals(testQueue.getElement(2), 3);
 		testQueue.clear();
 		assertEquals(testQueue.size(),0);
 	}
@@ -214,6 +221,13 @@ class TesterSimple
 		assertEquals(true,containsTestQueue.contains(1));
 		assertEquals(false,containsTestQueue.contains(4));
 		assertEquals(false,containsTestQueue.contains(0));
+		
+		//check to make sure it's referring to the right array
+		containsTestQueue.clear();
+		assertEquals(false, containsTestQueue.contains(2));
+		assertEquals(false, containsTestQueue.contains(1));
+		assertEquals(false,containsTestQueue.contains(4));
+		assertEquals(false,containsTestQueue.contains(0));
 	}
 	@Test
 	void testContainsString()
@@ -226,15 +240,20 @@ class TesterSimple
 		assertEquals(true,containsTestQueue.contains("b"));
 		assertEquals(false,containsTestQueue.contains("d"));
 		assertEquals(false,containsTestQueue.contains(" "));
+		
+		//check to make sure it's referring to the right array
+		containsTestQueue.clear();
+		assertEquals(false,containsTestQueue.contains("a"));
+		assertEquals(false,containsTestQueue.contains("b"));
 	}
 	//findMax Tests ---------------------------------------
 	@Test
 	void testFindMaxInteger() 
 	{
 		var testQueue = new SimplePriorityQueue<Integer>();
-		testQueue.insert(1);
 		testQueue.insert(2);
 		testQueue.insert(3);
+		testQueue.insert(1);
 		testQueue.insert(4);
 		assertEquals(4,testQueue.findMax());
 	}
@@ -253,12 +272,15 @@ class TesterSimple
 	void testDeleteMaxInteger() 
 	{
 		var testQueue = new SimplePriorityQueue<Integer>();
+		
+		// here we test duplication as well
+		testQueue.insert(4);
 		testQueue.insert(1);
 		testQueue.insert(2);
 		testQueue.insert(3);
 		testQueue.insert(4);
 		assertEquals(4,testQueue.deleteMax());
-		assertEquals(3,testQueue.size());
+		assertEquals(4,testQueue.size());
 	}
 	@Test
 	void testDeleteMaxString() 
@@ -278,7 +300,9 @@ class TesterSimple
 		var testQueue = new SimplePriorityQueue<Integer>();
 		testQueue.insertAll(new ArrayList<Integer>(Arrays.asList(5, 4, 3, 2, 1, 0)));
 		assertEquals(0,testQueue.binSearch(0));
+		assertEquals(0,testQueue.getElement(0));
 		assertEquals(3,testQueue.binSearch(3));
+		assertEquals(4,testQueue.getElement(4));
 	}
 	@Test
 	void testInsertAllString() 
@@ -287,6 +311,7 @@ class TesterSimple
 		testQueue.insertAll(new ArrayList<String>(Arrays.asList("b","e","d","c","a")));
 		assertEquals(0,testQueue.binSearch("a"));
 		assertEquals(3,testQueue.binSearch("d"));
+		assertEquals(testQueue.getElement(1), "b");
 	}
 	@Test
 	void testInsertAllIntegerFull() 
@@ -295,6 +320,7 @@ class TesterSimple
 		testQueue.insertAll(new ArrayList<Integer>(Arrays.asList(18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0)));
 		assertEquals(0,testQueue.binSearch(0));
 		assertEquals(3,testQueue.binSearch(3));
+		assertEquals(15,testQueue.getElement(15));
 	}
 	@Test
 	void testInsertAllStringFull() 
@@ -531,5 +557,56 @@ class TesterSimple
 		testQueue.insert("a");
 		assertEquals(false,testQueue.isEmpty());
 	}
+	
+	//Miscellaneous Comprehensive Tests ----------------------------------------
+	
+	@Test
+	void testMediumArray()
+	{
+		if(runtimeFlagMedium) {
+			
+		var testQueue = new SimplePriorityQueue<Integer>();
+		//create an array from 'jumbled up' input
+		for(int i = 250; i > 0; i--) {
+			for(int j = 0; j < 3; j++) {
+				testQueue.insert(i*j-1);
+			}
+		}
+		assertEquals(testQueue.getElement(0), -1);
+		assertEquals(testQueue.getElement(testQueue.getCurrentSize()-1), 499);
+		assertEquals(testQueue.getElement(testQueue.getCurrentSize()-2), 497);
+		assertEquals(testQueue.getElement(testQueue.getCurrentSize()-3), 495);
+		assertEquals(testQueue.getElement(testQueue.getCurrentSize()-4), 493);
+		}
+	}
+	
+	@Test
+	void testLargeArray()
+	{
+		if(runtimeFlagLarge) {
+			
+			var testQueue = new SimplePriorityQueue<Integer>();
+			
+			//create an array from 'jumbled up' input
+			
+			for(int i = 1000; i > 0; i--) {
+				for(int j = 1; j < 3; j++) {
+					for (int k = 4; k < 6; k++) {
+						testQueue.insert(i + j + k);
+					}
+				}
+			}
+			
+			assertEquals(testQueue.getElement(0), 6);
+			assertEquals(testQueue.getElement(3999), 1007);
+			assertEquals(testQueue.getElement(3998), 1006);
+			assertEquals(testQueue.getElement(3997), 1006);
+			
+			testQueue.printContents();
+			System.out.println("Array is of size " + testQueue.getCurrentSize());
+		}
+	}
+	
+	
 	
 }
