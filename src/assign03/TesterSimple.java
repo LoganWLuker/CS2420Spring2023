@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,58 @@ class TesterSimple
 		iQueue = new SimplePriorityQueue<Integer>();
 		pQueue = new SimplePriorityQueue<Point>();
 	}
-	//default constructor Tests ----------------------------------------------------------
+	//Throw Tests ------------------------------------------
+	@Test
+	void testFindMaxEmptyInteger()
+	{
+		var testQueue = new SimplePriorityQueue<Integer>();
+		assertThrows(NoSuchElementException.class, () -> testQueue.findMax());
+	}
+	@Test
+	void testFindMaxEmptyString()
+	{
+		var testQueue = new SimplePriorityQueue<String>();
+		assertThrows(NoSuchElementException.class, () -> testQueue.findMax());
+	}
+	@Test
+	void testDeleteMaxEmptyInteger()
+	{
+		var testQueue = new SimplePriorityQueue<Integer>();
+		assertThrows(NoSuchElementException.class, () -> testQueue.deleteMax());
+	}
+	@Test
+	void testDeleteMaxEmptyString()
+	{
+		var testQueue = new SimplePriorityQueue<String>();
+		assertThrows(NoSuchElementException.class, () -> testQueue.deleteMax());
+	}
+	//Throw Tests with Comparator ---------------------------
+	@Test
+	void testFindMaxEmptyIntegerComparator()
+	{
+		var testQueue = new SimplePriorityQueue<Integer>((o1,o2) -> o2.compareTo(o1));
+		assertThrows(NoSuchElementException.class, () -> testQueue.findMax());
+	}
+	@Test
+	void testFindMaxEmptyStringComparator()
+	{
+		var testQueue = new SimplePriorityQueue<String>((o1,o2) -> o2.compareTo(o1));
+		assertThrows(NoSuchElementException.class, () -> testQueue.findMax());
+	}
+	@Test
+	void testDeleteMaxEmptyIntegerComparator()
+	{
+		var testQueue = new SimplePriorityQueue<Integer>((o1,o2) -> o2.compareTo(o1));
+		assertThrows(NoSuchElementException.class, () -> testQueue.deleteMax());
+	}
+	@Test
+	void testDeleteMaxEmptyStringComparator()
+	{
+		var testQueue = new SimplePriorityQueue<String>((o1,o2) -> o2.compareTo(o1));
+		assertThrows(NoSuchElementException.class, () -> testQueue.deleteMax());
+	}
+	
+	//default constructor Tests -------------------------------------------------------------------
 	//insert Tests ---------------------------------------------
 	@Test
 	void testInsertInteger()
@@ -270,7 +322,7 @@ class TesterSimple
 		assertEquals(false,testQueue.isEmpty());
 	}
 	
-	//Comparator Tests ----------------------------------------------------------------------------
+	//Comparator Constructor Tests ----------------------------------------------------------------------------
 	//insert Tests ----------------------------------------
 	@Test
 	void testInsertIntegerComparator() 
