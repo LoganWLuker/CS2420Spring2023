@@ -1,5 +1,6 @@
 package assign03;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
@@ -78,6 +79,16 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 		return toReturn;
 	}
 
+	
+	
+	@SuppressWarnings("unchecked")
+	public void instantInsert(Integer[] arr)
+	{
+		queue = (E[])arr;
+		currentSize = queue.length;
+	}
+	
+	
 	@Override
 	public void insert(E item)
 	{
@@ -103,23 +114,12 @@ public class SimplePriorityQueue<E> implements PriorityQueue<E>
 			this.queue = nextArray;
 		}
 
-		// move everything >= pos up by 1
-		@SuppressWarnings("unchecked")
-		E[] placeArr = (E[]) new Object[queue.length];
-		
-		for (int i = 0; i < pos; i++)
+		for (int i = queue.length-1; i > pos; i--) 
 		{
-			placeArr[i] = queue[i];
+			queue[i] = queue[i-1];
 		}
 		
-		placeArr[pos] = item;
-		
-		for (int i = pos+1; i < queue.length; i++) 
-		{
-			placeArr[i] = queue[i-1];
-		}
-		
-		queue = placeArr;
+		queue[pos] = item;
 		currentSize ++;
 		
 	}
