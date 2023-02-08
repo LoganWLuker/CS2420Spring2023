@@ -39,6 +39,11 @@ public class LargestNumberSolver
 	 */
 	public static BigInteger findLargestNumber(Integer[] arr)
 	{
+		// Return 0 if array is empty, as instructed
+		
+		if(arr.length == 0) 
+			return BigInteger.ZERO;
+		
 		// Construct a proper comparator object, then feed arr and that comparator to insertionSort
 		
 		// Here the Comparator is constructed from two Integers, which are converted to strings, concatenated,
