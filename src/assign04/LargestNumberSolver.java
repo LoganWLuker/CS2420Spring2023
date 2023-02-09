@@ -145,7 +145,17 @@ public class LargestNumberSolver
 	 */
 	public static Integer[] findKthLargest(List<Integer[]> list, int k) throws IllegalArgumentException
 	{
-		// TODO: Use insertionSort with an appropriate comparator. Read BigInteger documentation to see how to compare
+		BigInteger[] bigs = new BigInteger[list.size()];
+		int count = 0;
+		for(int i = 0; i < list.size(); i++)
+		{
+			bigs[i] = findLargestNumber(list.get(i));
+		}
+		
+		// need to keep track of the bigs as they are sorted. maybe use a record?
+		
+		insertionSort(bigs, (b1, b2) -> (b1.compareTo(b2)));
+		
 		return null;
 	}
 	
