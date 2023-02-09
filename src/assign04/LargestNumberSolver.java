@@ -1,10 +1,14 @@
 package assign04;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  * This class, given an array of integers, provides tools to find the largest stringwise combination of
@@ -37,7 +41,7 @@ public class LargestNumberSolver
 	 * This method returns the largest number that can be formed by arranging the integers of the given array,
 	 *     in any order.   If the array is empty, the largest number that can be formed is 0.
 	 * @param arr
-	 * @return
+	 * @return the largest number
 	 */
 	public static BigInteger findLargestNumber(Integer[] arr)
 	{
@@ -49,9 +53,14 @@ public class LargestNumberSolver
 		// Construct a proper comparator object, then feed arr and that comparator to insertionSort
 		
 		// Here the Comparator is constructed from two Integers, which are converted to strings, concatenated,
-		// 	   then converted back to Integers and compared. TODO: It's possible that the compareTo method would work fine even if
-		// 	   we didn't convert the Strings back into Integers. 
-		insertionSort(arr, (i1, i2) -> (Integer.valueOf(i2.toString().concat(i1.toString())).compareTo(Integer.valueOf(i1.toString().concat(i2.toString())))));
+		// 	   then compared.
+		insertionSort(arr, (i1, i2) -> 
+				(
+					i2.toString().concat(i1.toString())
+				.compareTo(
+					i1.toString().concat(i2.toString())
+						  )
+				));
 		
 		// Concatenate and return the result
 		
@@ -175,7 +184,24 @@ public class LargestNumberSolver
 	 */
 	public static List<Integer[]> readFile(String filename)
 	{
-		// TODO: refer to assign02.CS2420Class.java
-		return null;
+		var toReturn = new ArrayList<Integer[]>();
+		//File intFile = new File(filename);
+		try(Scanner fileScan = new Scanner(new File(filename));)
+		{
+			while(fileScan.hasNextLine())
+			{
+				String[] subStrArr = fileScan.nextLine().split(" ");
+				Integer[] subArr = new Integer[subStrArr.length];
+				for(int i = 0; i < subStrArr.length; i++)
+					subArr[i] = Integer.parseInt(subStrArr[i]);
+				toReturn.add(subArr);
+				//System.out.println(fileScan.nextLine());
+			}
+		} catch (FileNotFoundException e)
+		{
+			System.out.println("file not found");
+			return toReturn;
+		}
+		return toReturn;
 	}
 }
