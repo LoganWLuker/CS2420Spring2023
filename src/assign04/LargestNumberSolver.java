@@ -172,37 +172,24 @@ public class LargestNumberSolver
 	{	
 		// Create data structures to keep track of calculated BigIntegers and their respective Integer[] arrays
 		BigInteger[] bigs = new BigInteger[list.size()];
-		//List<Integer[]> tempBig = new ArrayList<Integer[]>();
-		Map<BigInteger, Integer[]> bigMap = new HashMap<>();
+		Integer[] indexes = new Integer[list.size()];
+		//Map<BigInteger, Integer[]> bigMap = new HashMap<>();
 		
 		for(int i = 0; i < list.size(); i++)
 		{
+			indexes[i] = i;
 			BigInteger big = findLargestNumber(list.get(i));
 			bigs[i] = big;
-			bigMap.put(bigs[i], list.get(i));
+			//bigMap.put(bigs[i], list.get(i));
 		}
 		
+		//insertionSort(bigs, (b1, b2) -> (b2.compareTo(b1)));
+		insertionSort(indexes, (i1, i2) -> bigs[i2].compareTo(bigs[i1]));
 		
+		return list.get(indexes[k]);
 		
-		insertionSort(bigs, (b1, b2) -> (b2.compareTo(b1)));
-//		insertionSort(bigs, new Comparator<BigInteger>() 
-//		{
-//			@Override
-//			public int compare(BigInteger b1, BigInteger b2)
-//			{
-//				
-//				int result = b2.compareTo(b1);
-//				if(result > 0)
-//				{
-//					
-//				}
-//				return result;
-//			}
-//		});
-		
-		BigInteger target = bigs[k];
-		
-		return bigMap.get(target);
+		//BigInteger target = bigs[k];
+		//return bigMap.get(target);
 	}
 	
 	/**
