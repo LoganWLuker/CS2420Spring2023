@@ -169,12 +169,16 @@ public class LargestNumberSolver
 	 * @throws IllegalArgumentException
 	 */
 	public static Integer[] findKthLargest(List<Integer[]> list, int k) throws IllegalArgumentException
-	{	
+	{
+		//check if k is in bounds
+		if(k < 0 || k > list.size()-1)
+			throw new IllegalArgumentException("k is not a valid position in the list");
 		// Create data structures to keep track of calculated BigIntegers and their respective Integer[] arrays
 		BigInteger[] bigs = new BigInteger[list.size()];
 		Integer[] indexes = new Integer[list.size()];
 		//Map<BigInteger, Integer[]> bigMap = new HashMap<>();
 		
+		//create index array and an array with all the largest numbers
 		for(int i = 0; i < list.size(); i++)
 		{
 			indexes[i] = i;
@@ -184,8 +188,11 @@ public class LargestNumberSolver
 		}
 		
 		//insertionSort(bigs, (b1, b2) -> (b2.compareTo(b1)));
+		
+		//sort the index array based on the bigs array
 		insertionSort(indexes, (i1, i2) -> bigs[i2].compareTo(bigs[i1]));
 		
+		//return the original array that is at position k
 		return list.get(indexes[k]);
 		
 		//BigInteger target = bigs[k];
