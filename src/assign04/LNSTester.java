@@ -112,7 +112,42 @@ public class LNSTester
 	}
 	
 	// insertionSort Tests ----------------------------------------
-	
+	@Test
+	void insertionSortTypeTest()
+	{
+		Integer[] intArr = {4,5,2,3,0,1};
+		String[] strArr = {"e","f","c","d","a","b"};
+		Double[] dblArr = {4.1,5.2,2.3,3.4,0.5,1.6};
+		
+		LargestNumberSolver.insertionSort(intArr, (i1, i2) -> i1.compareTo(i2));
+		LargestNumberSolver.insertionSort(strArr, (i1, i2) -> i1.compareTo(i2));
+		LargestNumberSolver.insertionSort(dblArr, (i1, i2) -> i1.compareTo(i2));
+		
+		assertArrayEquals(new Integer[] {0,1,2,3,4,5}, intArr);
+		assertArrayEquals(new String[] {"a","b","c","d","e","f"}, strArr);
+		assertArrayEquals(new Double[] {0.5,1.6,2.3,3.4,4.1,5.2}, dblArr);
+	}
+	@Test
+	void insertionSortVerySmallTest()
+	{
+		Integer[] smallArr = {1,0};
+		Integer[] smallestArr = {1};
+		
+		LargestNumberSolver.insertionSort(smallestArr, (i1, i2) -> i1.compareTo(i2));
+		LargestNumberSolver.insertionSort(smallArr, (i1, i2) -> i1.compareTo(i2));
+		
+		assertArrayEquals(new Integer[] {1}, smallestArr);
+		assertArrayEquals(new Integer[] {0,1}, smallArr);
+	}
+	@Test
+	void insertionSortComparatorNullTest()
+	{
+		Integer[] arr = {4,5,2,3,0,1};
+		
+		LargestNumberSolver.insertionSort(arr, null);
+		
+		assertArrayEquals(new Integer[] {0,1,2,3,4,5}, arr);
+	}
 	
 	// findLargestNumber Tests ------------------------------------
 	

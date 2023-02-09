@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -24,8 +25,21 @@ public class LargestNumberSolver
 	 * @param arr <- input array
 	 * @param cmp <- comparator passed to the method
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> void insertionSort(T[] arr, Comparator<? super T> cmp)
 	{
+		if(cmp == null)
+		{
+			try
+			{
+				cmp = (o1,o2) -> ((Comparable<? super T>)o1).compareTo(o2);
+			}
+			catch(Exception e)
+			{
+				throw new NoSuchElementException("This Type doesn't have a default comparison. Don't put null as the comparator");
+			}
+		}
+		
 		for(int i = 0; i < arr.length; i++)
 		{
 			for(int j = i; j > 0 && (cmp.compare(arr[j], arr[j-1]) < 0); j--)
@@ -158,6 +172,7 @@ public class LargestNumberSolver
 	{	
 		// Create data structures to keep track of calculated BigIntegers and their respective Integer[] arrays
 		BigInteger[] bigs = new BigInteger[list.size()];
+		//List<Integer[]> tempBig = new ArrayList<Integer[]>();
 		Map<BigInteger, Integer[]> bigMap = new HashMap<>();
 		
 		for(int i = 0; i < list.size(); i++)
@@ -170,6 +185,20 @@ public class LargestNumberSolver
 		
 		
 		insertionSort(bigs, (b1, b2) -> (b2.compareTo(b1)));
+//		insertionSort(bigs, new Comparator<BigInteger>() 
+//		{
+//			@Override
+//			public int compare(BigInteger b1, BigInteger b2)
+//			{
+//				
+//				int result = b2.compareTo(b1);
+//				if(result > 0)
+//				{
+//					
+//				}
+//				return result;
+//			}
+//		});
 		
 		BigInteger target = bigs[k];
 		
@@ -195,7 +224,6 @@ public class LargestNumberSolver
 				for(int i = 0; i < subStrArr.length; i++)
 					subArr[i] = Integer.parseInt(subStrArr[i]);
 				toReturn.add(subArr);
-				//System.out.println(fileScan.nextLine());
 			}
 		} catch (FileNotFoundException e)
 		{
