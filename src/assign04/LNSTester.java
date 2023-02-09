@@ -54,6 +54,20 @@ public class LNSTester
 		assertEquals(LargestNumberSolver.sum(arrays), new BigInteger("106594"));
 		
 	}
+	
+	@Test
+	void findKthLargestTest()
+	{
+		Integer[] arr1 = {88, 51};
+		Integer[] arr2 = {7, 42, 97};
+		
+		var arrays = new ArrayList<Integer[]>();
+		arrays.add(arr1);
+		arrays.add(arr2);
+		
+		assertEquals(LargestNumberSolver.findKthLargest(arrays, 0), arr2);
+		assertEquals(LargestNumberSolver.findKthLargest(arrays, 1), arr1);
+	}
 	// Empty Tests -----------------------------------------------
 	
 	@Test

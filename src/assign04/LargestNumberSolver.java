@@ -2,7 +2,9 @@ package assign04;
 
 import java.math.BigInteger;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class, given an array of integers, provides tools to find the largest stringwise combination of
@@ -140,23 +142,29 @@ public class LargestNumberSolver
 	 * This method determines the kth largest number that can be formed by each array in the given list.
 	 * @param list
 	 * @param k
-	 * @return
+	 * @return 
 	 * @throws IllegalArgumentException
 	 */
 	public static Integer[] findKthLargest(List<Integer[]> list, int k) throws IllegalArgumentException
-	{
+	{	
+		// Create data structures to keep track of calculated BigIntegers and their respective Integer[] arrays
 		BigInteger[] bigs = new BigInteger[list.size()];
-		int count = 0;
+		Map<BigInteger, Integer[]> bigMap = new HashMap<>();
+		
 		for(int i = 0; i < list.size(); i++)
 		{
-			bigs[i] = findLargestNumber(list.get(i));
+			BigInteger big = findLargestNumber(list.get(i));
+			bigs[i] = big;
+			bigMap.put(bigs[i], list.get(i));
 		}
 		
-		// need to keep track of the bigs as they are sorted. maybe use a record?
 		
-		insertionSort(bigs, (b1, b2) -> (b1.compareTo(b2)));
 		
-		return null;
+		insertionSort(bigs, (b1, b2) -> (b2.compareTo(b1)));
+		
+		BigInteger target = bigs[k];
+		
+		return bigMap.get(target);
 	}
 	
 	/**
