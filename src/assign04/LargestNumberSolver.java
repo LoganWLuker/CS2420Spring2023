@@ -188,8 +188,8 @@ public class LargestNumberSolver
 		}
 		
 		//insertionSort(bigs, (b1, b2) -> (b2.compareTo(b1)));
-		
-		Arrays.sort(indexes, (i1, i2) -> bigs[i2].compareTo(bigs[i1]));
+		insertionSort(indexes,(i1, i2) -> bigs[i2].compareTo(bigs[i1]));
+		//Arrays.sort(indexes, (i1, i2) -> bigs[i2].compareTo(bigs[i1]));
 		
 		//return the original array that is at position k
 		return list.get(indexes[k]);

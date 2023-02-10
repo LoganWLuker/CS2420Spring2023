@@ -11,19 +11,19 @@ public class FindKthLargestTimer
 		Random randomNumberGenerator = new Random();
 		
 		// Do 100000 lookups and use the average running time
-		int timesToLoop = 50;
-
-		for(int n = 1; n <= 2000001; n += 100000)
+		int timesToLoop = 10;
+		
+		for(int n = 1; n <= 200001; n += 10000)
 		{
 			var arrays = new ArrayList<Integer[]>();
-			var array = new Integer[n/10000];
 			int k = randomNumberGenerator.nextInt(n);
 			// Add the numbers to it
 			for(int i = 0; i < n; i++)
 			{
-				for(int j = 0; j < array.length; j++)
-					array[j] = randomNumberGenerator.nextInt(0,100);
-				arrays.add(array);
+//				var array = new Integer[1];
+//				for(int j = 0; j < array.length; j++)
+//					array[j] = randomNumberGenerator.nextInt();
+				arrays.add(new Integer[] {randomNumberGenerator.nextInt(1000)});
 			}
 
 			long startTime, midpointTime, stopTime;
@@ -55,7 +55,8 @@ public class FindKthLargestTimer
 					(double) timesToLoop;
 
 			System.out.println(n-1 + "\t" + averageTime);
-
+			arrays.clear();
+			
 		}
 
 	}
