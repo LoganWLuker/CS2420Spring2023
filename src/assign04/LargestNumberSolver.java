@@ -97,14 +97,14 @@ public class LargestNumberSolver
 	public static int findLargestInt(Integer[] arr) throws OutOfRangeException
 	{
 		int num;
-		try 
-		{
-			num = findLargestNumber(arr).intValue();
-		}
-		catch(Exception e)
-		{
-			throw new OutOfRangeException("Largest number is too large for data type.");
-		}
+		BigInteger maxInt = new BigInteger("2147483647");
+		BigInteger largest = findLargestNumber(arr);
+		
+		if (maxInt.compareTo(largest) < 0)
+			throw new OutOfRangeException("Integer");
+		
+		
+		num = largest.intValue();
 		
 		return num;
 	}
@@ -118,14 +118,13 @@ public class LargestNumberSolver
 	public static long findLargestLong(Integer[] arr) throws OutOfRangeException
 	{
 		long num;
-		try 
-		{
-			num = findLargestNumber(arr).longValue();
-		}
-		catch(Exception e)
-		{
-			throw new OutOfRangeException("Largest number is too large for data type.");
-		}
+		BigInteger maxLong = new BigInteger("9223372036854775807");
+		BigInteger largest = findLargestNumber(arr);
+		
+		if (maxLong.compareTo(largest) < 0)
+			throw new OutOfRangeException("Long");
+		
+		num = largest.longValue();
 		
 		return num;
 	}

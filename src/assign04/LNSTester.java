@@ -186,7 +186,23 @@ public class LNSTester
 	}
 	
 	// findLargestLong Tests --------------------------------------
-	
+	@Test
+	void findLargestLongTest()
+	{
+		Integer[] emptyArr = {};
+		Integer[] arr1 = {1, 2, 3, 4, 5};
+		Integer[] arr2 = {13, 14, 15, 16};
+		Integer[] arr3 = {20, 200, 2000};
+		Integer[] arr4 = {0, 0, 0, 0, 0, 1};
+		Integer[] tooBig = {1000000000, 1000000000, 1000000000, 1000000000, 100000000, 100000000};
+		
+		assertEquals(LargestNumberSolver.findLargestLong(emptyArr), 0);
+		assertEquals(LargestNumberSolver.findLargestLong(arr1), 54321);
+		assertEquals(LargestNumberSolver.findLargestLong(arr2), 16151413);
+		assertEquals(LargestNumberSolver.findLargestLong(arr3), 202002000);
+		assertEquals(LargestNumberSolver.findLargestLong(arr4), 100000);
+		assertThrows(OutOfRangeException.class, () -> LargestNumberSolver.findLargestLong(tooBig));
+	}
 	
 	// sum Tests --------------------------------------------------
 	
