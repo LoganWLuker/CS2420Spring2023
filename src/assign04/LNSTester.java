@@ -208,6 +208,7 @@ public class LNSTester
 	@Test
 	void sumTest()
 	{
+		//test basic functionality
 		Integer[] arr1 = {88, 51};
 		Integer[] arr2 = {7, 42, 97};
 		Integer[] arr0 = {0, 0, 0, 0};
@@ -219,11 +220,13 @@ public class LNSTester
 		
 		assertEquals(LargestNumberSolver.sum(arrays), new BigInteger("106593"));
 		
+		//test empty arguments
 		Integer[] arr3 = {};
 		arrays.add(arr3);
 		
 		assertEquals(LargestNumberSolver.sum(arrays), new BigInteger("106593"));
 		
+		//test dynamicity of method
 		Integer[] arr4 = {1};
 		arrays.add(arr4);
 		
@@ -252,12 +255,14 @@ public class LNSTester
 		arrays.add(arr2);
 		arrays.add(arr3);
 	
+		// test basic method function
 		assertEquals(LargestNumberSolver.findKthLargest(arrays, 0), arr3);
 		assertEquals(LargestNumberSolver.findKthLargest(arrays, 1), arr2);
 		assertEquals(LargestNumberSolver.findKthLargest(arrays, 2), arr1);
 		
 		arrays.add(arr4);
 		
+		// test dynamicity of method
 		assertEquals(LargestNumberSolver.findKthLargest(arrays, 0), arr4);
 		
 		arrays.remove(arr1);
@@ -274,6 +279,7 @@ public class LNSTester
 	void readFileTest()
 	{
 		List<Integer[]> fileList = LargestNumberSolver.readFile("src/assign04/integers.txt");
+		List<Integer[]> emptyFileList = LargestNumberSolver.readFile("This file does not exist");
 		
 //		//print a line from the file
 //		for(int i = 0; i < fileList.get(0).length; i++)
@@ -287,6 +293,9 @@ public class LNSTester
 		assertArrayEquals(new Integer[] {88,51}, fileList.get(7));
 		//test last value
 		assertArrayEquals(new Integer[] {85, 35, 34, 52, 14, 92, 9, 79, 82, 83}, fileList.get(902));
+		
+		//test nonexistent file
+		assertEquals(new ArrayList<Integer[]>(), emptyFileList);
 	}
 	
 }
