@@ -205,10 +205,69 @@ public class LNSTester
 	}
 	
 	// sum Tests --------------------------------------------------
-	
+	@Test
+	void sumTest()
+	{
+		Integer[] arr1 = {88, 51};
+		Integer[] arr2 = {7, 42, 97};
+		Integer[] arr0 = {0, 0, 0, 0};
+		Integer[] arr10 = {1, 0};
+		
+		var arrays = new ArrayList<Integer[]>();
+		arrays.add(arr1);
+		arrays.add(arr2);
+		
+		assertEquals(LargestNumberSolver.sum(arrays), new BigInteger("106593"));
+		
+		Integer[] arr3 = {};
+		arrays.add(arr3);
+		
+		assertEquals(LargestNumberSolver.sum(arrays), new BigInteger("106593"));
+		
+		Integer[] arr4 = {1};
+		arrays.add(arr4);
+		
+		assertEquals(LargestNumberSolver.sum(arrays), new BigInteger("106594"));
+		
+		arrays.add(arr0);
+		
+		assertEquals(LargestNumberSolver.sum(arrays), new BigInteger("106594"));
+		
+		arrays.add(arr10);
+		
+		assertEquals(LargestNumberSolver.sum(arrays), new BigInteger("106604"));	
+	}
 	
 	// findKthLargest Tests ---------------------------------------
+	@Test
+	void findKthLargestTest() 
+	{
+		Integer[] arr1 = {88, 51};
+		Integer[] arr2 = {7, 42, 87};
+		Integer[] arr3 = {9, 11, 11};
+		Integer[] arr4 = {100, 0, 0, 0};
 	
+		var arrays = new ArrayList<Integer[]>();
+		arrays.add(arr1);
+		arrays.add(arr2);
+		arrays.add(arr3);
+	
+		assertEquals(LargestNumberSolver.findKthLargest(arrays, 0), arr3);
+		assertEquals(LargestNumberSolver.findKthLargest(arrays, 1), arr2);
+		assertEquals(LargestNumberSolver.findKthLargest(arrays, 2), arr1);
+		
+		arrays.add(arr4);
+		
+		assertEquals(LargestNumberSolver.findKthLargest(arrays, 0), arr4);
+		
+		arrays.remove(arr1);
+		
+		assertEquals(LargestNumberSolver.findKthLargest(arrays, 2), arr2);
+		
+		arrays.remove(arr4);
+		
+		assertEquals(LargestNumberSolver.findKthLargest(arrays, 0), arr3);
+	}
 	
 	// readFile Tests ---------------------------------------------
 	@Test
