@@ -176,7 +176,6 @@ public class LargestNumberSolver
 		// Create data structures to keep track of calculated BigIntegers and their respective Integer[] arrays
 		BigInteger[] bigs = new BigInteger[list.size()];
 		Integer[] indexes = new Integer[list.size()];
-		//Map<BigInteger, Integer[]> bigMap = new HashMap<>();
 		
 		//create index array and an array with all the largest numbers
 		for(int i = 0; i < list.size(); i++)
@@ -184,18 +183,12 @@ public class LargestNumberSolver
 			indexes[i] = i;
 			BigInteger big = findLargestNumber(list.get(i));
 			bigs[i] = big;
-			//bigMap.put(bigs[i], list.get(i));
 		}
-		
-		//insertionSort(bigs, (b1, b2) -> (b2.compareTo(b1)));
 		insertionSort(indexes,(i1, i2) -> bigs[i2].compareTo(bigs[i1]));
 		//Arrays.sort(indexes, (i1, i2) -> bigs[i2].compareTo(bigs[i1]));
 		
 		//return the original array that is at position k
 		return list.get(indexes[k]);
-		
-		//BigInteger target = bigs[k];
-		//return bigMap.get(target);
 	}
 	
 	/**

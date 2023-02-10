@@ -3,6 +3,11 @@ package assign04;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Timer for graphing
+ * @author Bruce Crockett and Logan Luker
+ * @version February 9th, 2023
+ */
 public class FindKthLargestTimer
 {
 
@@ -20,9 +25,6 @@ public class FindKthLargestTimer
 			// Add the numbers to it
 			for(int i = 0; i < n; i++)
 			{
-//				var array = new Integer[1];
-//				for(int j = 0; j < array.length; j++)
-//					array[j] = randomNumberGenerator.nextInt();
 				arrays.add(new Integer[] {randomNumberGenerator.nextInt(1000)});
 			}
 
