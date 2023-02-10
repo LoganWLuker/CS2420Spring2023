@@ -150,10 +150,40 @@ public class LNSTester
 	}
 	
 	// findLargestNumber Tests ------------------------------------
-	
+	@Test
+	void findLargestNumberTest()
+	{
+		Integer[] emptyArr = {};
+		Integer[] arr1 = {1, 2, 3, 4, 5};
+		Integer[] arr2 = {13, 14, 15, 16};
+		Integer[] arr3 = {20, 200, 2000};
+		Integer[] arr4 = {0, 0, 0, 0, 0, 1};
+		
+		assertEquals(LargestNumberSolver.findLargestNumber(emptyArr), BigInteger.ZERO);
+		assertEquals(LargestNumberSolver.findLargestNumber(arr1), new BigInteger("54321"));
+		assertEquals(LargestNumberSolver.findLargestNumber(arr2), new BigInteger("16151413"));
+		assertEquals(LargestNumberSolver.findLargestNumber(arr3), new BigInteger("202002000"));
+		assertEquals(LargestNumberSolver.findLargestNumber(arr4), new BigInteger("100000"));	
+	}
 	
 	// findLargestInt Tests ---------------------------------------
-	
+	@Test
+	void findLargestIntTest()
+	{
+		Integer[] emptyArr = {};
+		Integer[] arr1 = {1, 2, 3, 4, 5};
+		Integer[] arr2 = {13, 14, 15, 16};
+		Integer[] arr3 = {20, 200, 2000};
+		Integer[] arr4 = {0, 0, 0, 0, 0, 1};
+		Integer[] tooBig = {1000000000, 1000000000};
+		
+		assertEquals(LargestNumberSolver.findLargestInt(emptyArr), 0);
+		assertEquals(LargestNumberSolver.findLargestInt(arr1), 54321);
+		assertEquals(LargestNumberSolver.findLargestInt(arr2), 16151413);
+		assertEquals(LargestNumberSolver.findLargestInt(arr3), 202002000);
+		assertEquals(LargestNumberSolver.findLargestInt(arr4), 100000);
+		assertThrows(OutOfRangeException.class, () -> LargestNumberSolver.findLargestInt(tooBig));
+	}
 	
 	// findLargestLong Tests --------------------------------------
 	
