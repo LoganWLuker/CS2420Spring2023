@@ -141,9 +141,11 @@ public class LargestNumberSolver
 		
 		BigInteger[] bigs = new BigInteger[list.size()];
 		int count = 0;
+		ArrayList<Integer[]> newList = new ArrayList<Integer[]>(list);
 		
-		for(Integer[] arr : list)
+		for(Integer[] arr : newList)
 		{
+			//Integer[] newArr = new Integer[] arr;
 			bigs[count] = findLargestNumber(arr);
 			count++;
 		}

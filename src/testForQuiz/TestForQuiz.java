@@ -2,11 +2,17 @@ package testForQuiz;
 
 public class TestForQuiz {
 
-	public static void main(String[] args) 
+	private static void updateArray(int[] arr) 
 	{
-		char[] arr = new char[50];
-		System.out.println(arr[arr.length-1]);
-
+	   arr = new int[arr.length];
+	   for(int i = 0; i < arr.length; i++)
+	      arr[i]++;
 	}
 
+	public static void main(String[] args) 
+	{
+	   int[] values = { 5, 2, 3, 4, 5 };
+	   updateArray(values);
+	   System.out.print(values[0]);
+	}
 }

@@ -245,6 +245,7 @@ public class LNSTester
 	@Test
 	void findKthLargestTest() 
 	{
+		Integer[] arr0 = {5};
 		Integer[] arr1 = {88, 51};
 		Integer[] arr2 = {7, 42, 87};
 		Integer[] arr3 = {9, 11, 11};
@@ -254,8 +255,12 @@ public class LNSTester
 		arrays.add(arr1);
 		arrays.add(arr2);
 		arrays.add(arr3);
+		
+		var arraySmall = new ArrayList<Integer[]>();
+		arraySmall.add(arr0);
 	
 		// test basic method function
+		assertEquals(LargestNumberSolver.findKthLargest(arraySmall, 0), arr0);
 		assertEquals(LargestNumberSolver.findKthLargest(arrays, 0), arr3);
 		assertEquals(LargestNumberSolver.findKthLargest(arrays, 1), arr2);
 		assertEquals(LargestNumberSolver.findKthLargest(arrays, 2), arr1);
