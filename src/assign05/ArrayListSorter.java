@@ -1,70 +1,79 @@
 package assign05;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 public class ArrayListSorter<T>
 {
 	private static int threshold = 2;
-	public ArrayListSorter()
-	{
-		
-	}
-	
 	public static <T extends Comparable<? super T>> void mergesort(ArrayList<T> arr)
 	{
-		ArrayList<T> out = new ArrayList<T>(arr.size());
+		//check if empty
 		if(arr.size() <= 0)
 			throw new IllegalArgumentException("Array to be sorted cannot be empty");
-		
-		mergesortRec(arr, out);
+		//temp array for storage
+		ArrayList<T> temp = new ArrayList<T>(arr.size());
+		for(int i = 0; i < arr.size(); i++)		//fill temp array with null
+			temp.add(i,null);
+		mergesortRec(arr, 0, arr.size(), temp); //call the recursive method
 	}
-	
-	private static <T extends Comparable<? super T>> ArrayList<T> copyOfRangeAL(ArrayList<T> arr, int beg, int end)
+	public static <T extends Comparable<? super T>> void mergesortRec(ArrayList<T> arr, int beg, int end, ArrayList<T> temp)
 	{
-		ArrayList<T> out = new ArrayList<T>(end - beg);
-		for(int i = beg; i <= end; i++)
+		//check if we should run insertion Sort
+		if(end - beg < threshold)
 		{
-			out.set(i, arr.get(i));
+			insertionSort(arr);
+			return;
 		}
+		//find midpoint
+		int mid = (beg + end) / 2;
+		//sort first half
+		mergesortRec(arr, beg, mid, temp);
+		//sort second half
+		mergesortRec(arr, mid, end, temp);
+		//merge
+		merge(arr, beg, mid, end, temp);
 		
-		return out;
 	}
-	
-	private static <T extends Comparable<? super T>> void mergesortRec(ArrayList<T> arr, ArrayList<T> out)
+	/**
+	 * Insertion Sort to sort if array size is less than threshold
+	 * @param <T>	Type of ArrayList
+	 * @param arr	Array to be Sorted
+	 */
+	public static <T extends Comparable<? super T>> void insertionSort(ArrayList<T> arr)
 	{
-		if(arr.size() < threshold)
-			return; //call insertion sort
-		
-		ArrayList<T> arr1 = copyOfRangeAL(arr, 0, arr.size()/2);
-		ArrayList<T> arr2 = copyOfRangeAL(arr, arr.size()/2, arr.size()-1);
-		
-		
-		mergesortRec(arr1, out);
-		mergesortRec(arr2, out);
-		merge(arr1, arr2, arr);
-		//copy() ?
-	}
-	
-	private static <T extends Comparable<? super T>> void merge(ArrayList<T> arr1, ArrayList<T> arr2, ArrayList<T> out)
-	{
-		int i0 = 0, i1 = 0;
-		for(int i = 0; i < out.size(); i++) //fix the stop condition
+		for(int i = 0; i < arr.size(); i++)
 		{
-			if (i0 == arr1.size())
-                out.set(i, arr2.get(i1));
-            else if (i1 == arr2.size())
-                out.set(i, arr1.get(i0));
-            else if(arr1.get(i0).compareTo(arr2.get(i1)) < 0)
+			for(int j = i; j > 0 && (arr.get(j).compareTo(arr.get(j-1)) < 0); j--)
 			{
-				out.set(i, arr1.get(i0));
-				i0++;
+				var temp = arr.get(j);
+				arr.set(j, arr.get(j-1));
+				arr.set(j-1, temp);
 			}
+		}
+	}
+	
+	public static <T extends Comparable<? super T>> void merge(ArrayList<T> arr, int beg, int mid, int end, ArrayList<T> temp)
+	{
+		//Set up pointers
+		int i = beg, j = mid, k = beg;
+		//compare and increment pointers while they are in their halves
+		while (i < mid && j < end)
+		{
+			if (arr.get(i).compareTo(arr.get(j)) < 0)	//store the smaller value and increment It's pointer
+				temp.set(k++, arr.get(i++));
 			else
-			{
-				out.set(i, arr2.get(i1));
-				i1++;
-			}
+				temp.set(k++, arr.get(j++));
 		}
+		//After a pointer has moved out of range, store the rest of the other pointer's values
+		while (i < mid)
+			temp.set(k++, arr.get(i++));
+		while (j < end)
+			temp.set(k++, arr.get(j++));
+		//Copy everything back to the main array within the bounds beg <= x < k
+		for(int copy = beg; copy < k; copy++)
+			arr.set(copy, temp.get(copy));
 	}
 	
 	public static <T extends Comparable<? super T>> void quicksort(ArrayList<T> arr)
