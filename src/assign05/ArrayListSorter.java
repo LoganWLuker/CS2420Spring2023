@@ -93,19 +93,26 @@ public class ArrayListSorter<T>
 			arr.set(copy, temp.get(copy));
 	}
 	
-	public static <T extends Comparable<? super T>> void quicksort(ArrayList<T> arr, int begin, int end)
+	public static <T extends Comparable<? super T>> void quicksort(ArrayList<T> arr)
 	{
-		int partitionIndex = partition(arr, begin, end);
-		quicksort(arr, begin, partitionIndex-1);
-        quicksort(arr, partitionIndex+1, end);
+		quicksortRec(arr,0,arr.size()-1);
+	}
+	public static <T extends Comparable<? super T>> void quicksortRec(ArrayList<T> arr, int begin, int end)
+	{
+		if(begin < end)
+		{
+			int partitionIndex = partition(arr, begin, end);
+			quicksortRec(arr, begin, partitionIndex-1);
+			quicksortRec(arr, partitionIndex+1, end);			
+		}
 	}
 	private static <T extends Comparable<? super T>> int partition(ArrayList<T> arr, int begin, int end) 
 	{
-	    int pivot = pivotA(arr.size());
+	    T pivot = arr.get(pivotB(begin, end));
 	    int i = (begin-1);
 
-	    for (int j = begin; j < end; j++) {
-	        if (arr.get(j).compareTo(arr.get(pivot)) <= 0) {
+	    for (int j = begin; j <= end-1; j++) {
+	        if (arr.get(j).compareTo(pivot) < 0) {
 	            i++;
 
 	            T swapTemp = arr.get(i);
@@ -124,9 +131,9 @@ public class ArrayListSorter<T>
 	{
 		return (int)(Math.random()*(size));	//return random integer
 	}
-	private static int pivotB(int size)
+	private static int pivotB(int begin, int end)
 	{
-		return size/2; //the middle of the array
+		return (begin+end)/2; //the middle of the array
 	}
 	private static int pivotC(int size)
 	{

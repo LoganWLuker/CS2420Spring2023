@@ -25,31 +25,42 @@ public class ArrayListSorterTester
 	}
 	
 	
+//	@Test
+//	void mergesortDevTest()
+//	{
+////		ArrayList<Integer> arr1 = new ArrayList<Integer>();
+////		arr1.add(4);
+////		arr1.add(2);
+////		arr1.add(5);
+////		arr1.add(1);
+////		arr1.add(3);
+////		arr1.add(0);
+//		ArrayList<Integer> arr1 = new ArrayList<Integer>(Arrays.asList(510510,5131,6848,565,15,210515,451,4,8));
+//		ArrayList<Integer> out = new ArrayList<Integer>();
+//		
+//		for(int i = 0; i < 6; i++)
+//		{
+//			out.add(-1);
+//		}
+//		
+//		
+//		ArrayListSorter.mergesort(arr1);
+//		
+//		for(Integer e : arr1)
+//		{
+//			System.out.print(e + ",");
+//		}
+//		
+//	}
 	@Test
-	void mergesortDevTest()
+	void quicksortTest()
 	{
-//		ArrayList<Integer> arr1 = new ArrayList<Integer>();
-//		arr1.add(4);
-//		arr1.add(2);
-//		arr1.add(5);
-//		arr1.add(1);
-//		arr1.add(3);
-//		arr1.add(0);
-		ArrayList<Integer> arr1 = new ArrayList<Integer>(Arrays.asList(510510,5131,6848,565,15,210515,451,4,8));
-		ArrayList<Integer> out = new ArrayList<Integer>();
-		
-		for(int i = 0; i < 6; i++)
-		{
-			out.add(-1);
-		}
-		
-		
-		ArrayListSorter.mergesort(arr1);
-		
-		for(Integer e : arr1)
+		ArrayList<Integer> arr2 = new ArrayList<Integer>(Arrays.asList(510510,5131,6848,565,15,210515,451,4,8));
+		ArrayListSorter.quicksort(arr2);
+		//System.out.println("\t");
+		for(Integer e : arr2)
 		{
 			System.out.print(e + ",");
 		}
-		
 	}
 }
