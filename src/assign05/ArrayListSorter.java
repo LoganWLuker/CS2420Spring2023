@@ -93,9 +93,44 @@ public class ArrayListSorter<T>
 			arr.set(copy, temp.get(copy));
 	}
 	
-	public static <T extends Comparable<? super T>> void quicksort(ArrayList<T> arr)
+	public static <T extends Comparable<? super T>> void quicksort(ArrayList<T> arr, int begin, int end)
 	{
-		
+		int partitionIndex = partition(arr, begin, end);
+		quicksort(arr, begin, partitionIndex-1);
+        quicksort(arr, partitionIndex+1, end);
+	}
+	private static <T extends Comparable<? super T>> int partition(ArrayList<T> arr, int begin, int end) 
+	{
+	    int pivot = pivotA(arr.size());
+	    int i = (begin-1);
+
+	    for (int j = begin; j < end; j++) {
+	        if (arr.get(j).compareTo(arr.get(pivot)) <= 0) {
+	            i++;
+
+	            T swapTemp = arr.get(i);
+	            arr.set(i,arr.get(j));
+	            arr.set(j, swapTemp);
+	        }
+	    }
+	    
+	    T swapTemp = arr.get(i+1);
+	    arr.set(i+1, arr.get(end));
+	    arr.set(end, swapTemp);
+
+	    return i+1;
+	}
+	private static int pivotA(int size)
+	{
+		return (int)(Math.random()*(size));	//return random integer
+	}
+	private static int pivotB(int size)
+	{
+		return size/2; //the middle of the array
+	}
+	private static int pivotC(int size)
+	{
+		return 0; //the first index in the array
 	}
 	
 	public static ArrayList<Integer> generateAscending(int size)
