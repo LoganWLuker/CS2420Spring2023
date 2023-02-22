@@ -101,14 +101,16 @@ public class ArrayListSorter<T>
 	{
 		if(begin < end)
 		{
-			int partitionIndex = partition(arr, begin, end);
+			//int partitionIndex = pivotA(arr, begin, end);
+			//int partitionIndex = pivotB(arr, begin, end);
+			int partitionIndex = pivotC(arr, begin, end);
 			quicksortRec(arr, begin, partitionIndex-1);
 			quicksortRec(arr, partitionIndex+1, end);			
 		}
 	}
 	private static <T extends Comparable<? super T>> int partition(ArrayList<T> arr, int begin, int end) 
 	{
-	    T pivot = arr.get(pivotB(begin, end));
+	    T pivot = arr.get(end);
 	    int i = (begin-1);
 
 	    for (int j = begin; j <= end-1; j++) {
@@ -127,17 +129,29 @@ public class ArrayListSorter<T>
 
 	    return i+1;
 	}
-	private static int pivotA(int size)
+	private static <T extends Comparable<? super T>> int pivotA(ArrayList<T> arr, int begin, int end)
 	{
-		return (int)(Math.random()*(size));	//return random integer
+		int r = (int)(Math.random()*(end-begin))+begin;	//pivot at a random point in the range
+		T swapTemp = arr.get(r);
+	    arr.set(r, arr.get(end));
+	    arr.set(end, swapTemp);
+		return partition(arr,begin,end);
 	}
-	private static int pivotB(int begin, int end)
+	private static <T extends Comparable<? super T>> int pivotB(ArrayList<T> arr, int begin, int end)
 	{
-		return (begin+end)/2; //the middle of the array
+		int r = (begin+end)/2;				//pivot the middle of the range
+		T swapTemp = arr.get(r);
+	    arr.set(r, arr.get(end));
+	    arr.set(end, swapTemp);
+		return partition(arr,begin,end);	
 	}
-	private static int pivotC(int size)
+	private static <T extends Comparable<? super T>> int pivotC(ArrayList<T> arr, int begin, int end)
 	{
-		return 0; //the first index in the array
+		int r = begin;	//pivot at the first point in the range
+		T swapTemp = arr.get(r);
+	    arr.set(r, arr.get(end));
+	    arr.set(end, swapTemp);
+		return partition(arr,begin,end);
 	}
 	
 	public static ArrayList<Integer> generateAscending(int size)
