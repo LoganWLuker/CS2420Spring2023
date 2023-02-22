@@ -3,10 +3,19 @@ package assign05;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
-
+/**
+ * This class, given a generic array, can perform a mergesort or a quicksort, and can generate sorted ArrayLists given a size.
+ * @author Bruce Crockett and Logan Luker
+ * @version February 22nd, 2023
+ */
 public class ArrayListSorter<T>
 {
 	private static int threshold = 2;
+	/**
+	 * Merge Sort driver method and setup
+	 * @param <T>	type of array
+	 * @param arr	array to sort
+	 */
 	public static <T extends Comparable<? super T>> void mergesort(ArrayList<T> arr)
 	{
 		//check if empty
@@ -18,6 +27,14 @@ public class ArrayListSorter<T>
 			temp.add(i,null);
 		mergesortRec(arr, 0, arr.size(), temp); //call the recursive method
 	}
+	/**
+	 * Recursive mergesort routine
+	 * @param <T>	type of array
+	 * @param arr	array to sort
+	 * @param beg	beginning of sorting range
+	 * @param end	end of sorting range
+	 * @param temp	temporary array for storage
+	 */
 	public static <T extends Comparable<? super T>> void mergesortRec(ArrayList<T> arr, int beg, int end, ArrayList<T> temp)
 	{
 		//check if we should run insertion Sort
