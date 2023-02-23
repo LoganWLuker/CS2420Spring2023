@@ -10,7 +10,7 @@ import java.util.Collections;
  */
 public class ArrayListSorter<T>
 {
-	private static int threshold = 2;
+	private static int threshold = 3;
 	/**
 	 * Merge Sort driver method and setup
 	 * @param <T>	type of array
@@ -18,6 +18,18 @@ public class ArrayListSorter<T>
 	 */
 	public static <T extends Comparable<? super T>> void mergesort(ArrayList<T> arr)
 	{
+		//check if empty
+		if(arr.size() <= 0)
+			throw new IllegalArgumentException("Array to be sorted cannot be empty");
+		//temp array for storage
+		ArrayList<T> temp = new ArrayList<T>(arr.size());
+		for(int i = 0; i < arr.size(); i++)		//fill temp array with null
+			temp.add(i,null);
+		mergesortRec(arr, 0, arr.size(), temp); //call the recursive method
+	}
+	public static <T extends Comparable<? super T>> void mergesort(ArrayList<T> arr, int threshold)
+	{
+		ArrayListSorter.threshold = threshold;
 		//check if empty
 		if(arr.size() <= 0)
 			throw new IllegalArgumentException("Array to be sorted cannot be empty");
@@ -127,9 +139,10 @@ public class ArrayListSorter<T>
 	{
 		if(begin < end)
 		{
-			int partitionIndex = pivotA(arr, begin, end);
-			//int partitionIndex = pivotB(arr, begin, end);
-			//int partitionIndex = pivotC(arr, begin, end);
+			int partitionIndex = pivotA(arr, begin, end);	//random pivot
+			//int partitionIndex = pivotB(arr, begin, end);	//center pivot
+			//int partitionIndex = pivotC(arr, begin, end);	//beginning pivot
+			//int partitionIndex = partition(arr, begin, end);	//end (default) pivot
 			quicksortRec(arr, begin, partitionIndex-1);
 			quicksortRec(arr, partitionIndex+1, end);			
 		}
