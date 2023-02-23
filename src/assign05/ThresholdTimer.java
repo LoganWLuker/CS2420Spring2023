@@ -46,7 +46,7 @@ public class ThresholdTimer
 		{
 			
 			var testList = readFile("src/assign05/integers.txt",1);
-
+			
 			long startTime, midpointTime, stopTime;
 
 			// First, spin computing stuff until one second has gone by

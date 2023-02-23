@@ -52,7 +52,7 @@ public class ArrayListSorter<T>
 		//check if we should run insertion Sort
 		if(end - beg < threshold)
 		{
-			insertionSort(arr);
+			insertionSort(arr, beg, end);
 			return;
 		}
 		//find midpoint
@@ -70,11 +70,11 @@ public class ArrayListSorter<T>
 	 * @param <T>	Type of ArrayList
 	 * @param arr	Array to be Sorted
 	 */
-	private static <T extends Comparable<? super T>> void insertionSort(ArrayList<T> arr)
+	private static <T extends Comparable<? super T>> void insertionSort(ArrayList<T> arr, int beg, int end)
 	{
-		for(int i = 0; i < arr.size(); i++)
+		for(int i = beg; i < end; i++)
 		{
-			for(int j = i; j > 0 && (arr.get(j).compareTo(arr.get(j-1)) < 0); j--)
+			for(int j = i; j > beg && (arr.get(j).compareTo(arr.get(j-1)) < 0); j--)
 			{
 				var temp = arr.get(j);
 				arr.set(j, arr.get(j-1));
