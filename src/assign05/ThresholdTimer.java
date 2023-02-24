@@ -40,7 +40,7 @@ public class ThresholdTimer
 		
 		
 		// -----------------iterates over threshold in 200k-member array
-		int timesToLoop = 50;
+		int timesToLoop = 500;
 		
 		// for each threshold n
 		//for(int n = 2; n <= 30; n += 1)
@@ -70,7 +70,7 @@ public class ThresholdTimer
 					for(int j = 0; j < testList.size(); j++)
 						testCopy.add(testList.get(j));
 					//int threshold = 2 + (int) ((n-1)*.001*testCopy.size());
-					ArrayListSorter.mergesort(testCopy, 2 + (int) .04 * testCopy.size()); //threshold = .5%, 1%, 1.5% ... of length
+					ArrayListSorter.mergesort(testCopy, 14); //threshold = .5%, 1%, 1.5% ... of length 2 + (int) 0.02 * testCopy.size()
 				}
 
 				midpointTime = System.nanoTime();
@@ -92,7 +92,7 @@ public class ThresholdTimer
 				double averageTime = ((midpointTime - startTime) - (stopTime - midpointTime)) / (double) timesToLoop;
 
 				//averages[k-15] = averageTime;
-				System.out.println((200*k) + "\t" + averageTime);
+				System.out.println(averageTime);
 			}
 			/*
 			// Compute the average running time for all arraylists given this threshold

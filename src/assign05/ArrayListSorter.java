@@ -139,8 +139,8 @@ public class ArrayListSorter<T>
 	{
 		if(begin < end)
 		{
-			int partitionIndex = pivotC(arr, begin, end);	//random pivot
-			//int partitionIndex = pivotB(arr, begin, end);	//center pivot
+			//int partitionIndex = pivotA(arr, begin, end);	//random pivot
+			int partitionIndex = pivotB(arr, begin, end);	//center pivot
 			//int partitionIndex = pivotC(arr, begin, end);	//beginning pivot
 			//int partitionIndex = partition(arr, begin, end);	//end (default) pivot
 			quicksortRec(arr, begin, partitionIndex-1);
