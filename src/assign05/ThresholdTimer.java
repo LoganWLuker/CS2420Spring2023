@@ -113,8 +113,8 @@ public class ThresholdTimer
 		for(int n = 1; n <= 10001; n += 100)
 		{
 			
-			var testList = ArrayListSorter.generatePermuted(n);
 
+			var testList = ArrayListSorter.generatePermuted(n);
 			long startTime, midpointTime, stopTime;
 
 			// First, spin computing stuff until one second has gone by
