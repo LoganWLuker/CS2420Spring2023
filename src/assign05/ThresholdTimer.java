@@ -37,16 +37,84 @@ public class ThresholdTimer
 
 	public static void main(String[] args) 
 	{
-		//Random randomNumberGenerator = new Random();
 		
-		// Do 100000 lookups and use the average running time
+		
+		// -----------------iterates over threshold in 200k-member array
+		int timesToLoop = 50;
+		
+		// for each threshold n
+		//for(int n = 2; n <= 30; n += 1)
+		//{
+			//double[] averages = new double[11];
+			//System.out.println("Threshold: " + n);
+			
+			// finds average runtime for threshold n from arraylist sizes [2000, 5000] by increments of 200
+			for(int k = 10; k <= 25; k++)
+			{
+				var testList = readFile("src/assign05/integers.txt",k);
+
+				long startTime, midpointTime, stopTime;
+
+				// First, spin computing stuff until one second has gone by
+				// This allows this thread to stabilize
+				startTime = System.nanoTime();
+				while(System.nanoTime() - startTime < 1000000000) { // empty block
+				}
+			
+				// Now, run the test
+				startTime = System.nanoTime();
+
+				for(int i = 0; i < timesToLoop; i++)
+				{
+					var testCopy = new ArrayList<Integer>(testList.size());
+					for(int j = 0; j < testList.size(); j++)
+						testCopy.add(testList.get(j));
+					//int threshold = 2 + (int) ((n-1)*.001*testCopy.size());
+					ArrayListSorter.mergesort(testCopy, 2 + (int) .04 * testCopy.size()); //threshold = .5%, 1%, 1.5% ... of length
+				}
+
+				midpointTime = System.nanoTime();
+
+				// Run a loop to capture the cost of running the "timesToLoop" loop,
+				// including the cost of copying the testList
+				for(int i = 0; i < timesToLoop; i++) {
+					var testCopyB = new ArrayList<Integer>(testList.size());
+					for(int j = 0; j < testList.size(); j++)
+						testCopyB.add(testList.get(j));
+					//int threshold = 2 + (int) ((n-1)*.001*testCopyB.size());
+				}
+
+				stopTime = System.nanoTime();
+
+				// Compute the time, subtract the cost of running the loop
+				// from the cost of running the loop and doing the lookups
+				// Average it over the number of runs
+				double averageTime = ((midpointTime - startTime) - (stopTime - midpointTime)) / (double) timesToLoop;
+
+				//averages[k-15] = averageTime;
+				System.out.println((200*k) + "\t" + averageTime);
+			}
+			/*
+			// Compute the average running time for all arraylists given this threshold
+			double sum = 0;
+			for(int m = 0; m < 11; m++)
+				sum += averages[m];
+			double av = sum / 11;
+			System.out.println(((n-1)*.1) + "%\t" + av);
+			*/
+		//}
+		
+		
+		
+		/* 
+		// ------------iterates over arbitrary permuted array's size------------------------
 		int timesToLoop = 50;
 
-		for(int n = 2; n <= 5000; n += 1)
+		for(int n = 1; n <= 10001; n += 100)
 		{
 			
-			var testList = readFile("src/assign05/integers.txt",1);
-			
+
+			var testList = ArrayListSorter.generatePermuted(n);
 			long startTime, midpointTime, stopTime;
 
 			// First, spin computing stuff until one second has gone by
@@ -59,12 +127,21 @@ public class ThresholdTimer
 			startTime = System.nanoTime();
 
 			for(int i = 0; i < timesToLoop; i++)
-				ArrayListSorter.mergesort(testList, n);
+			{
+				var testCopy = new ArrayList<Integer>(testList.size());
+				for(int j = 0; j < testList.size(); j++)
+					testCopy.add(testList.get(j));
+				ArrayListSorter.mergesort(testCopy, 2); //manually change threshold \in {2, ...}
+			}
 
 			midpointTime = System.nanoTime();
 
-			// Run a loop to capture the cost of running the "timesToLoop" loop
-			for(int i = 0; i < timesToLoop; i++) { // empty block
+			// Run a loop to capture the cost of running the "timesToLoop" loop,
+			// including the cost of copying the testList
+			for(int i = 0; i < timesToLoop; i++) {
+				var testCopyB = new ArrayList<Integer>(testList.size());
+				for(int j = 0; j < testList.size(); j++)
+					testCopyB.add(testList.get(j));
 			}
 
 			stopTime = System.nanoTime();
@@ -78,6 +155,6 @@ public class ThresholdTimer
 			System.out.println(n + "\t" + averageTime);
 
 		}
-
+		*/
 	}
 }
