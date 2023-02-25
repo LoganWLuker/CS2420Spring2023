@@ -66,7 +66,8 @@ public class SinglyLinkedList<T> implements List<T>
 			queue[queue.length-1] = null;
 			currentSize--;
 			*/
-			// TODO:
+			// TODO: for loop iterating until we arrive at previous node,
+			// then set before.next = before.next.next
 		}
 		
 	}
@@ -90,8 +91,7 @@ public class SinglyLinkedList<T> implements List<T>
 
 	@Override
 	public T getFirst() throws NoSuchElementException {
-		// TODO Auto-generated method stub
-		return null;
+		return head.data;
 	}
 
 	@Override
@@ -102,8 +102,9 @@ public class SinglyLinkedList<T> implements List<T>
 
 	@Override
 	public T deleteFirst() throws NoSuchElementException {
-		// TODO Auto-generated method stub
-		return null;
+		Node temp = head;
+		head = head.next;
+		return temp.data;
 	}
 
 	@Override
@@ -120,13 +121,13 @@ public class SinglyLinkedList<T> implements List<T>
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.size;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
+		if(size == 0)
+			return true;
 		return false;
 	}
 
@@ -144,8 +145,7 @@ public class SinglyLinkedList<T> implements List<T>
 
 	@Override
 	public Iterator iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return new SLLIterator();
 	}
 
 }
