@@ -30,37 +30,6 @@ public class SinglyLinkedList<T> implements List<T>
 		head.data = data;
 		head.next = next;
 	}
-	public void setLinkNext(Node next)
-	{
-		head.next = next;
-	}
-	public Node getLinkNext()
-	{
-		return head.next;
-	}
-	public void setData(T d)
-	{
-		head.data = d;
-	}
-	public T getData()
-	{
-		return head.data;
-	}
-	
-//	private class Node {
-//		T data;
-//		Node next;
-//		public Node()
-//		{
-//			next = null;
-//			data = null;
-//		}
-//		public Node(T data, Node next)
-//		{
-//			this.data = data;
-//			this.next = next;
-//		}
-//	}
 	
 	public class SLLIterator implements Iterator<T>
 	{
@@ -100,6 +69,14 @@ public class SinglyLinkedList<T> implements List<T>
 			prev.next = lastReturned.next;
 			lastReturned = null;
 		}
+		public void insert(Object element)
+		{
+			if(lastReturned == null)
+				lastReturned = head;
+			@SuppressWarnings("unchecked")
+			Node newNode = new Node((T) element, lastReturned.next);
+			lastReturned.next = newNode;
+		}
 		
 	}
 	@Override
@@ -114,20 +91,33 @@ public class SinglyLinkedList<T> implements List<T>
 	@Override
 	public void insert(int index, Object element) throws IndexOutOfBoundsException 
 	{
-		@SuppressWarnings("unchecked")
-		Node newNode = new Node((T) element, head.next);
-		head.next = newNode;	
+		if(index < 0 || index > size)
+			throw new IndexOutOfBoundsException("Index is out of range");
+		if(index == 0)
+		{
+			insertFirst(element);
+			return;
+		}
+		Iterator<T> insIterator = this.iterator();
+		for(int i = 0; i < index-1; i++)
+			insIterator.next();
+		((SLLIterator)(insIterator)).insert(element);
+		size++;
 	}
 
 	@Override
 	public T getFirst() throws NoSuchElementException 
 	{
+		if(size == 0)
+			throw new NoSuchElementException("List is empty");
 		return head.data;
 	}
 
 	@Override
 	public T get(int index) throws IndexOutOfBoundsException 
 	{
+		if(index < 0 || index > size)
+			throw new IndexOutOfBoundsException("Index is out of range");
 		T toReturn = head.data;
 		Iterator<T> getIterator = this.iterator();
 		for(int i = 0; i < index; i++)
@@ -138,6 +128,8 @@ public class SinglyLinkedList<T> implements List<T>
 	@Override
 	public T deleteFirst() throws NoSuchElementException 
 	{
+		if(size == 0)
+			throw new NoSuchElementException("List is empty");
 		Node temp = head;
 		head = head.next;
 		return temp.data;
@@ -146,6 +138,8 @@ public class SinglyLinkedList<T> implements List<T>
 	@Override
 	public T delete(int index) throws IndexOutOfBoundsException 
 	{
+		if(index < 0 || index > size)
+			throw new IndexOutOfBoundsException("Index is out of range");
 		T toReturn = head.data;
 		Iterator<T> delIterator = this.iterator();
 		for(int i = 0; i < index; i++)
@@ -158,10 +152,15 @@ public class SinglyLinkedList<T> implements List<T>
 	@Override
 	public int indexOf(Object element) 
 	{
-		//TODO finish this
-		T toReturn = head.data;
-		Iterator<T> delIterator = this.iterator();
-		return 0;
+		int toReturn = 0;
+		Iterator<T> indIterator = this.iterator();
+		T current = head.data;
+		while(!current.equals(element))
+		{
+			current = indIterator.next();
+			toReturn++;
+		}
+		return toReturn;
 	}
 
 	@Override
