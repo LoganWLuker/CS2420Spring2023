@@ -116,7 +116,7 @@ public class SinglyLinkedList<T> implements List<T>
 	@Override
 	public T get(int index) throws IndexOutOfBoundsException 
 	{
-		if(index < 0 || index > size)
+		if(index < 0 || index >= size) // Note: if it breaks then change this back from >= to >
 			throw new IndexOutOfBoundsException("Index is out of range");
 		T toReturn = head.data;
 		Iterator<T> getIterator = this.iterator();
@@ -180,15 +180,23 @@ public class SinglyLinkedList<T> implements List<T>
 	@Override
 	public void clear() 
 	{
-		// TODO Auto-generated method stub
-		
+		head = null;
+		size = 0;
 	}
 
 	@Override
-	public T[] toArray() 
+	public Object[] toArray()  throws NoSuchElementException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		if(size == 0)
+			throw new NoSuchElementException("List is empty");
+		Iterator<T> toArrIterator = this.iterator();
+		Object[] arr = new Object[size];
+		arr[0] = head.data;
+		for(int i = 1; i < size; i++)
+		{
+			arr[i] = toArrIterator.next();
+		}
+		return arr;
 	}
 
 	@Override
