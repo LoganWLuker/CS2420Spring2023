@@ -45,5 +45,13 @@ public class LinkedListStack<E> implements Stack<E>
 	{
 		return list.size();
 	}
+	public void insert(int index, Object element)
+	{
+		list.insert(index, element);
+	}
+	public E get(int index) throws IndexOutOfBoundsException
+	{
+		return list.get(index);
+	}
 
 }

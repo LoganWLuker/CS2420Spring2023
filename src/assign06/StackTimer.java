@@ -1,32 +1,25 @@
 package assign06;
 
+import java.util.ArrayList;
 import java.util.Random;
+
+import assign05.ArrayListSorter;
 
 public class StackTimer
 {
 
 	public static void main(String[] args) 
 	{
-		Random randomNumberGenerator = new Random();
+		//Random randomNumberGenerator = new Random();
 		
 		// Do 100000 lookups and use the average running time
-		int timesToLoop = 50;
-
-		for(int n = 0; n <= 2000000; n += 100000)
+		int timesToLoop = 100;
+		
+		for(int n = 10000; n <= 200000; n += 10000)
 		{
 			
-			var stack = new LinkedListStack();
-			Integer[] arr = new Integer[n];
+			var stack = new LinkedListStack<Integer>();
 			
-			// Add the numbers to it
-			for(int i = 0; i < n; i++)
-			{
-				arr[i] = i;
-				//int randomIndex = randomNumberGenerator.nextInt(100000);
-				//randomQueue.insert(randomIndex);
-			}
-			randomQueue.instantInsert(arr);
-
 			long startTime, midpointTime, stopTime;
 
 			// First, spin computing stuff until one second has gone by
@@ -37,25 +30,35 @@ public class StackTimer
 
 			// Now, run the test
 			startTime = System.nanoTime();
-
-			for(int i = 0; i < timesToLoop; i++)
-				randomQueue.findMax();
+			for(int j = 0; j < timesToLoop; j++)
+			{
+				stack = new LinkedListStack<Integer>();
+				for(int i = 0; i < n; i++)
+				{
+					stack.push(5318008);
+				}
+			}
 
 			midpointTime = System.nanoTime();
 
 			// Run a loop to capture the cost of running the "timesToLoop" loop
-			for(int i = 0; i < timesToLoop; i++) { // empty block
+			for(int j = 0; j < timesToLoop; j++)
+			{
+				stack = new LinkedListStack<Integer>();
+				for(int i = 0; i < n; i++)
+				{
+					//empty
+				}
 			}
-
 			stopTime = System.nanoTime();
 
 			// Compute the time, subtract the cost of running the loop
 			// from the cost of running the loop and doing the lookups
 			// Average it over the number of runs
-			double averageTime = ((midpointTime - startTime) - (stopTime - midpointTime)) / 
-					(double) timesToLoop;
+			double averageTime = (((midpointTime - startTime) - (stopTime - midpointTime)) / 
+					(double) n) / (double) timesToLoop;
 
-			System.out.println(averageTime);
+			System.out.println(n + "\t" + averageTime);
 
 		}
 
