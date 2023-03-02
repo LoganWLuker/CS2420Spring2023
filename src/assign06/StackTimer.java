@@ -13,13 +13,12 @@ public class StackTimer
 		//Random randomNumberGenerator = new Random();
 		
 		// Do 100000 lookups and use the average running time
-		int timesToLoop = 100;
+		int timesToLoop = 300;
 		
-		for(int n = 10000; n <= 200000; n += 10000)
+		for(int n = 100000; n <= 300000; n += 10000)
 		{
-			
 			var stack = new LinkedListStack<Integer>();
-			
+			//var stack = new ArrayStack<Integer>();
 			long startTime, midpointTime, stopTime;
 
 			// First, spin computing stuff until one second has gone by
@@ -33,10 +32,18 @@ public class StackTimer
 			for(int j = 0; j < timesToLoop; j++)
 			{
 				stack = new LinkedListStack<Integer>();
+				//stack = new ArrayStack<Integer>();
 				for(int i = 0; i < n; i++)
 				{
-					stack.push(5318008);
+					stack.push(10);
 				}
+				/*
+				for(int i = 0; i < n; i++)
+				{
+					stack.pop();
+					//stack.peek();
+				}
+				*/
 			}
 
 			midpointTime = System.nanoTime();
@@ -45,9 +52,10 @@ public class StackTimer
 			for(int j = 0; j < timesToLoop; j++)
 			{
 				stack = new LinkedListStack<Integer>();
+				//stack = new ArrayStack<Integer>();
 				for(int i = 0; i < n; i++)
 				{
-					//empty
+					//stack.push(10);
 				}
 			}
 			stopTime = System.nanoTime();

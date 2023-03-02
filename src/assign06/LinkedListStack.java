@@ -10,6 +10,11 @@ public class LinkedListStack<E> implements Stack<E>
 	{
 		list = new SinglyLinkedList<E>();
 	}
+	
+	public LinkedListStack(SinglyLinkedList<E> inpList)
+	{
+		this.list = inpList;
+	}
 	@Override
 	public void clear()
 	{

@@ -15,11 +15,11 @@ public class WebBrowser
 		back = new LinkedListStack<URL>();
 	}
 	
-	public WebBrowser(LinkedListStack<URL> history)
+	public WebBrowser(SinglyLinkedList<URL> history)
 	{
 		forward = new LinkedListStack<URL>();
-		back = history;
-		current = history.peek();
+		back = new LinkedListStack<URL>(history);
+		current = back.peek();
 	}
 	
 	public void visit(URL webpage)
@@ -31,6 +31,8 @@ public class WebBrowser
 	
 	public URL back() throws NoSuchElementException
 	{
+		if(back.isEmpty())
+			throw new NoSuchElementException("This webpage does not exist");
 		forward.push(current);
 		back.pop();
 		current = back.peek();
@@ -39,11 +41,22 @@ public class WebBrowser
 	
 	public URL forward() throws NoSuchElementException
 	{
-		return null;
+		if(forward.isEmpty())
+			throw new NoSuchElementException("This webpage does not exist");
+		back.push(forward.peek());
+		current = forward.pop();
+		return current;
 	}
 	
 	public SinglyLinkedList<URL> history()
 	{
-		return null;
+		var toReturn = new SinglyLinkedList<URL>();
+		int i = 0;
+		while(!back.isEmpty())
+		{
+			toReturn.insert(i, back.pop());
+			i++;
+		}
+		return toReturn;
 	}
 }

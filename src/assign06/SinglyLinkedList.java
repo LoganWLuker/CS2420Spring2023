@@ -132,6 +132,7 @@ public class SinglyLinkedList<T> implements List<T>
 			throw new NoSuchElementException("List is empty");
 		Node temp = head;
 		head = head.next;
+		size--;
 		return temp.data;
 	}
 
