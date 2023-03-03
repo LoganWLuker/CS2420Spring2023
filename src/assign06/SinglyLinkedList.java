@@ -92,6 +92,7 @@ public class SinglyLinkedList<T> implements List<T>
 				throw new IllegalStateException();
 			prev.next = lastReturned.next;
 			lastReturned = null;
+			size--;
 		}
 		
 		/**
@@ -177,7 +178,6 @@ public class SinglyLinkedList<T> implements List<T>
 		for(int i = 0; i < index; i++)
 			toReturn = delIterator.next();
 		delIterator.remove();
-		size--;
 		return toReturn;
 	}
 
