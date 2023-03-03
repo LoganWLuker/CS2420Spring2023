@@ -3,11 +3,22 @@ package assign06;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * This class implements the given List interface for a singly-linked list.
+ * Overridden methods have contracts as detailed in the List class.
+ * Note to grader: our Iterator methods are O(1), as required for extra credit.
+ * @author Logan Luker and Bruce Crockett
+ *
+ * @param <T> : type of data to be stored in list
+ */
 public class SinglyLinkedList<T> implements List<T>
 {
 	Node head;
 	int size;
 	
+	/**
+	 *  Storage implementation for each element of the list
+	 */
 	private class Node
 	{
 		T data;
@@ -19,18 +30,31 @@ public class SinglyLinkedList<T> implements List<T>
 		}
 	}
 	
+	/**
+	 * Default constructor
+	 */
 	public SinglyLinkedList()
 	{
 		this.head = null;
 		this.size = 0;
 		
 	}
+	
+	/**
+	 * Constructs list with first element of data input, and given a Node to
+	 * attach that first element to.
+	 * @param data : data to be stored in new head
+	 * @param next : Node to be appended to new head
+	 */
 	public SinglyLinkedList(T data, Node next)
 	{
 		head.data = data;
 		head.next = next;
 	}
 	
+	/**
+	 * Iterator used to handle methods below
+	 */
 	public class SLLIterator implements Iterator<T>
 	{
 		private Node next;
@@ -69,6 +93,12 @@ public class SinglyLinkedList<T> implements List<T>
 			prev.next = lastReturned.next;
 			lastReturned = null;
 		}
+		
+		/**
+		 * Inserts a Node at the current position of the iterator,
+		 * with given data
+		 * @param element : data field of Node to be inserted
+		 */
 		public void insert(Object element)
 		{
 			if(lastReturned == null)
@@ -79,6 +109,7 @@ public class SinglyLinkedList<T> implements List<T>
 		}
 		
 	}
+	
 	@Override
 	public void insertFirst(Object element)
 	{

@@ -3,7 +3,11 @@ package assign06;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-public class IteratorTest
+/**
+ * Class to test the methods of the SinglyLinkedList class.
+ * @author Bruce Crockett and Logan Luker
+ */
+public class SinglyLinkedListTest
 {
 	@Test
 	public void getTest() 
