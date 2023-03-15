@@ -201,4 +201,23 @@ public class SinglyLinkedListTest
 		assertEquals(3, iter2.next());
 		assertEquals(4, iter2.next());
 	}
+	
+	@Test
+	void iteratorTestThree()
+	{
+		var list = new SinglyLinkedList<String>();
+		list.insert(0, "a");
+		list.insert(1, "b");
+		list.insert(2, "c");
+		list.insert(3, "d");
+		list.insert(4, "e");
+		list.insert(5, "f");
+		
+		SinglyLinkedList<String>.SLLIterator iter = (SinglyLinkedList<String>.SLLIterator) list.iterator();
+		
+		while(iter.hasNext())
+		{
+			iter.next();
+		}
+	}
 }
