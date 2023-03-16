@@ -8,4 +8,5 @@ digraph G {
 	v6->v7
 	v7->v9
 	v8->v8
+	v9->v2
 }

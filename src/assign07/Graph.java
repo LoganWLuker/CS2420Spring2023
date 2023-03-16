@@ -19,7 +19,7 @@ public class Graph <T> {
 
 	// the graph -- a set of vertices (T name mapped to Vertex instance)
 	private HashMap<T, Vertex<T>> vertices;
-	public ArrayList<Vertex<T>> vertList; //may contain repeat vertices
+	//public ArrayList<Vertex<T>> vertList; //may contain repeat vertices
 	//public ArrayList<Edge<T>> edgeList;
 
 	/**
@@ -27,10 +27,19 @@ public class Graph <T> {
 	 */
 	public Graph() {
 		vertices = new HashMap<T, Vertex<T>>();
-		vertList = new ArrayList<Vertex<T>>();
+		//vertList = new ArrayList<Vertex<T>>();
 		//edgeList = new ArrayList<Edge<T>>();
 	}
-
+	public Graph(List<T> sources, List<T> destinations)
+	{
+		if(sources.size() != destinations.size())
+			throw new IllegalArgumentException("Sources and Destinations are of different sizes");
+		vertices = new HashMap<T, Vertex<T>>();
+		for(int i = 0; i < sources.size(); i++)
+		{
+			this.addEdge(sources.get(i), destinations.get(i));
+		}
+	}
 	/**
 	 * Adds to the graph a directed edge from the vertex with name "name1" 
 	 * to the vertex with name "name2".  (If either vertex does not already 
@@ -44,32 +53,57 @@ public class Graph <T> {
 		// if vertex already exists in graph, get its object
 		if(vertices.containsKey(name1)) {
 			vertex1 = vertices.get(name1);
-			vertList.add(vertex1);
+			//vertList.add(vertex1);
 		}
 		// else, create a new object and add to graph
 		else {
 			vertex1 = new Vertex<T>(name1);
 			vertices.put(name1, vertex1);
-			vertList.add(vertex1);
+			//vertList.add(vertex1);
 		}
 
 		Vertex<T> vertex2;
 		if(vertices.containsKey(name2)) {
 			vertex2 = vertices.get(name2);
-			vertList.add(vertex2);
+			//vertList.add(vertex2);
 		}
 		else {
 			vertex2 = new Vertex<T>(name2);
 			vertices.put(name2, vertex2);
-			vertList.add(vertex2);
+			//vertList.add(vertex2);
 		}
 
 		// add new directed edge from vertex1 to vertex2
 		vertex1.addEdge(vertex2);
 	}
-	
-	public boolean DFS(Graph<T> G, Vertex<T> source, Vertex<T> target) {
-		
+	/**
+	 * Prepares to Depth First Search for a path to given target from given source
+	 * Sets the vertices to visited = false, and calls the recursive DFS method
+	 * with the vertices attached to the data in the hash map
+	 * @param sourceKey
+	 * @param targetKey
+	 * @return
+	 */
+	public boolean DFSPrep(T sourceKey, T targetKey)
+	{
+		if(!vertices.containsKey(sourceKey) || !vertices.containsKey(targetKey))
+			throw new IllegalArgumentException("Source or Target Vertex does not exist");
+		Vertex<T> source = vertices.get(sourceKey);
+		Vertex<T> target = vertices.get(targetKey);
+		vertices.forEach((key,value) -> {
+			value.visited = false;
+		});
+		return DFS(source,target);
+	}
+	/**
+	 * Recursive method to depth first search for a path from source to target
+	 * 
+	 * @param source	starting vertex
+	 * @param target	target vertex
+	 * @return true if path exists, false if no path exists
+	 */
+	public boolean DFS(Vertex<T> source, Vertex<T> target) 
+	{
 		source.visited = true;
 		if(source.equals(target))
 			return true;
@@ -80,51 +114,71 @@ public class Graph <T> {
 			Vertex<T> neighbor = iter.next().getOtherVertex();
 			if(neighbor.visited == false)
 			{
-				boolean result = DFS(G, neighbor, target);
+				boolean result = DFS(neighbor, target);
 				if(result)
 					return true;
 			}
 		}
-		
 		return false;
 	}
-	
-	public List<T> BFS(Graph<T> G, Vertex<T> source, Vertex<T> target) {
+	/**
+	 * Driver method for BFS
+	 * Prepares to run a BFS search from source to target
+	 * @param sourceKey
+	 * @param targetKey
+	 * @return
+	 */
+	public List<T> BFSPrep(T sourceKey, T targetKey)
+	{
+		if(!vertices.containsKey(sourceKey) || !vertices.containsKey(targetKey))
+			throw new IllegalArgumentException("Source or Target Vertex does not exist");
+		Vertex<T> source = vertices.get(sourceKey);
+		Vertex<T> target = vertices.get(targetKey);
+		vertices.forEach((key,value) -> {
+			value.visited = false;
+			value.cameFrom = null;
+		});
+		
+		return BFS(source, target);
+	}
+	/**
+	 * Runs a BFS from source to target, then returns the shortest path
+	 * @param source
+	 * @param target
+	 * @return
+	 */
+	public List<T> BFS(Vertex<T> source, Vertex<T> target) {
 		Queue<Vertex<T>> verticesToVisit = new LinkedList<Vertex<T>>();
 		verticesToVisit.offer(source);
 		
 		while(!verticesToVisit.isEmpty())
 		{
-			Vertex<T> v = verticesToVisit.poll();
+			var v = verticesToVisit.poll();
 			v.visited = true;
 			if(v.equals(target))
-				return reconstructPath(G, target, source); //source might be wrong
+				return reconstructPath(target, source); //source might be wrong
 			
 			Iterator<Edge<T>> iter = v.edges();
-			while(iter.hasNext())
-			{
-				Vertex<T> neighbor = iter.next().getOtherVertex();
+			iter.forEachRemaining((edge) -> {
+				var neighbor = edge.getOtherVertex();
 				if(neighbor.visited == false)
 				{
 					neighbor.cameFrom = v;
 					neighbor.visited = true;
 					verticesToVisit.offer(neighbor);
-				}	
-			}	
+				}
+			});
 		}
-		
-		return null;
+		throw new IllegalArgumentException("no path exists");
 	}
 	
-	public LinkedList<T> reconstructPath(Graph<T> G, Vertex<T> target, Vertex<T> start) {
+	public LinkedList<T> reconstructPath(Vertex<T> target, Vertex<T> start) {
 		LinkedList<T> path = new LinkedList<T>();
 		for(Vertex<T> v = target; !v.equals(start); v = v.cameFrom)
 		{
-			path.add(v.getName());
+			path.addFirst(v.getName());
 		}
-		path.add(start.getName());
-		
-		//TODO: reverse path
+		path.addFirst(start.getName());
 		return path;
 	}
 	

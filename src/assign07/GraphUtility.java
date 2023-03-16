@@ -26,40 +26,43 @@ public class GraphUtility {
 	 */
 	public static <Type> boolean areConnected(List<Type> sources, List<Type> destinations, Type srcData, Type dstData)
 			throws IllegalArgumentException {
-		if(sources.size() != destinations.size())
-			throw new IllegalArgumentException("Sources and Destinations are of different sizes");
 		
 		//create the graph represented by the two parallel arrays
-		int i = 0;
-		boolean srcSaved = false, dstSaved = false;
-		Vertex<Type> srcVert = new Vertex<Type>(srcData); // these aren't the real vertex objects we need
-		Vertex<Type> dstVert = new Vertex<Type>(dstData); // "
-		Graph<Type> graph = new Graph<Type>();
+		var graph = new Graph<Type>(sources, destinations);
+		//return the depth search results with this data
+		return graph.DFSPrep(srcData,dstData);
 		
-		for(Type src : sources)
-		{
-			graph.addEdge(src, destinations.get(i));
-			if(src.equals(srcData) && srcSaved == false) {
-				srcVert = graph.vertList.get(2*i);
-				srcSaved = true;
-			}
-			if(destinations.get(i).equals(dstData) && dstSaved == false) { //should be O(1) if using arrayLists
-				dstVert = graph.vertList.get(2*i + 1);
-				dstSaved = true;
-			}
-			i++;
-		}
+//		int i = 0;
+//		boolean srcSaved = false, dstSaved = false;
+//		Vertex<Type> srcVert = new Vertex<Type>(srcData); // these aren't the real vertex objects we need
+//		Vertex<Type> dstVert = new Vertex<Type>(dstData); // "
+//		Graph<Type> graph = new Graph<Type>();
+//		
+//		for(Type src : sources)
+//		{
+//			graph.addEdge(src, destinations.get(i));
+//			if(src.equals(srcData) && srcSaved == false) {
+//				srcVert = graph.vertList.get(2*i);
+//				srcSaved = true;
+//			}
+//			if(destinations.get(i).equals(dstData) && dstSaved == false) { //should be O(1) if using arrayLists
+//				dstVert = graph.vertList.get(2*i + 1);
+//				dstSaved = true;
+//			}
+//			i++;
+//		}
 		
 		//call Graph.DFS
-		
 		//set all the vertices to unvisited
-		for(Vertex<Type> v : graph.vertList) {
-			v.visited = false;
-		}
+//		for(Vertex<Type> v : graph.vertList)
+//		{
+//			v.visited = false;
+//		}
+		//boolean nodes[] = new boolean[graph.getNumOfVertices()];
 		
-		boolean result = graph.DFS(graph, srcVert, dstVert);
 		
-		return result;
+		//boolean result = graph.DFS(srcData, dstData);
+		
 	}
 
 	/**
@@ -74,43 +77,41 @@ public class GraphUtility {
 	 */
 	public static <Type> List<Type> shortestPath(List<Type> sources, List<Type> destinations, Type srcData, Type dstData)
 			throws IllegalArgumentException {
-		if(sources.size() != destinations.size())
-			throw new IllegalArgumentException("Sources and Destinations are of different sizes");
 		
 		//create the graph represented by the two parallel arrays
-		int i = 0;
-		boolean srcSaved = false, dstSaved = false;
-		Vertex<Type> srcVert = new Vertex<Type>(srcData); // these aren't the real vertex objects we need
-		Vertex<Type> dstVert = new Vertex<Type>(dstData); // "
-		Graph<Type> graph = new Graph<Type>();
+		var graph = new Graph<Type>(sources, destinations);
+		List<Type> path = graph.BFSPrep(srcData, dstData); //might need to be linkedlist
+		return path;
+		
+//		int i = 0;
+//		boolean srcSaved = false, dstSaved = false;
+//		Vertex<Type> srcVert = new Vertex<Type>(srcData); // these aren't the real vertex objects we need
+//		Vertex<Type> dstVert = new Vertex<Type>(dstData); // "
+//		Graph<Type> graph = new Graph<Type>();
 				
-		for(Type src : sources)
-		{
-			graph.addEdge(src, destinations.get(i));
-			if(src.equals(srcData) && srcSaved == false) {
-				srcVert = graph.vertList.get(2*i);
-				srcSaved = true;
-			}
-			if(destinations.get(i).equals(dstData) && dstSaved == false) { //should be O(1) if using arrayLists
-				dstVert = graph.vertList.get(2*i + 1);
-				dstSaved = true;
-			}
-			i++;
-		}
+//		for(Type src : sources)
+//		{
+//			graph.addEdge(src, destinations.get(i));
+//			if(src.equals(srcData) && srcSaved == false) {
+//				srcVert = graph.vertList.get(2*i);
+//				srcSaved = true;
+//			}
+//			if(destinations.get(i).equals(dstData) && dstSaved == false) { //should be O(1) if using arrayLists
+//				dstVert = graph.vertList.get(2*i + 1);
+//				dstSaved = true;
+//			}
+//			i++;
+//		}
 				
 		//call Graph.BFS
 				
 		//set all the vertices to unvisited
-		for(Vertex<Type> v : graph.vertList) {
-			v.visited = false;
-			v.cameFrom = null;
-		}
+//		for(Vertex<Type> v : graph.vertList) {
+//			v.visited = false;
+//			v.cameFrom = null;
+//		}
 		
-		List<Type> path = graph.BFS(graph, srcVert, dstVert); //might need to be linkedlist
 		
-		//TODO: handle null return case
-		
-		return path;
 	}
 	
 	/**
@@ -146,7 +147,8 @@ public class GraphUtility {
 	 *        "destinations" list that can be passed to the public methods in
 	 *        this class
 	 */
-	public static void buildListsFromDot(String filename, ArrayList<String> sources, ArrayList<String> destinations) {
+	@SuppressWarnings("unchecked")
+	public static <Type> void buildListsFromDot(String filename, ArrayList<Type> sources, ArrayList<Type> destinations) {
 
 		Scanner scan = null;
 		try {
@@ -198,8 +200,8 @@ public class GraphUtility {
 					continue;
 
 				// indicate edge between vertex1 and vertex2
-				sources.add(vertex1);
-				destinations.add(vertex2);
+				sources.add((Type) vertex1);
+				destinations.add((Type) vertex2);
 			}
 
 			// do until the "}" has been read

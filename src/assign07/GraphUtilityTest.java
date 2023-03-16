@@ -33,4 +33,14 @@ public class GraphUtilityTest {
 		assertFalse(GraphUtility.areConnected(sources, destinations, "v2", "v3"));
 		assertFalse(GraphUtility.areConnected(sources, destinations, "v2", "v9"));
 	}
+	@Test
+	void shortestPathTest()
+	{
+		ArrayList<String> sources = new ArrayList<String>();
+		ArrayList<String> destinations = new ArrayList<String>();
+		GraphUtility.buildListsFromDot("lab08.tenVertices", sources, destinations);
+		System.out.println(GraphUtility.shortestPath(sources, destinations, "v0", "v2"));
+		
+		
+	}
 }
