@@ -25,11 +25,20 @@ public class GraphUtilityTimer {
 
 		    ArrayList<String> sources = new ArrayList<String>();
 		    ArrayList<String> destinations = new ArrayList<String>();
+		    
+		    // areConnected and shortestPath
+		    /*
 		    for(int i = 0; i < 2 * n; i++) {
 			    sources.add(vertex[rng.nextInt(n)]);
 			    destinations.add(vertex[rng.nextInt(n)]);
 		    }
-			
+		    */
+		    
+		    // sort
+		    for(int i = 0; i < n - 1; i++) {
+			      sources.add(vertex[i]);
+			      destinations.add(vertex[i + 1 + rng.nextInt(n - (i+1))]);
+		    }      
 			long startTime, midpointTime, stopTime;
 
 			// First, spin computing stuff until one second has gone by
@@ -42,12 +51,22 @@ public class GraphUtilityTimer {
 			startTime = System.nanoTime();
 			for(int j = 0; j < timesToLoop; j++)
 			{
+				// areConnected
+				//GraphUtility.shortestPath(sources, destinations, sources.get(rng.nextInt(n)), destinations.get(rng.nextInt(n)));
+
+				// shortestPath
+				/*
 				try {
 					GraphUtility.shortestPath(sources, destinations, sources.get(rng.nextInt(n)), destinations.get(rng.nextInt(n)));
 				}
 				catch(IllegalArgumentException e) {
 					
 				}
+				*/
+				
+				// sort
+				
+				GraphUtility.sort(sources, destinations);
 			}
 
 			midpointTime = System.nanoTime();
@@ -56,8 +75,11 @@ public class GraphUtilityTimer {
 			// and generating two random integers
 			for(int j = 0; j < timesToLoop; j++)
 			{
+				// areConnected and shortestPath
+				/*
 				sources.get(rng.nextInt(n));
 				destinations.get(rng.nextInt(n));
+				*/
 			}
 			stopTime = System.nanoTime();
 
