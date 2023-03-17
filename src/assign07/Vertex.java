@@ -16,6 +16,7 @@ public class Vertex <T> {
 	private T name;
 	public boolean visited;
 	public Vertex<T> cameFrom;
+	public int inDegree;
 
 	// adjacency list
 	private LinkedList<Edge<T>> adj;
@@ -28,6 +29,7 @@ public class Vertex <T> {
 	public Vertex(T name) {
 		this.name = name;
 		this.adj = new LinkedList<Edge<T>>();
+		this.inDegree = 0;
 	}
 
 	/**
@@ -44,6 +46,7 @@ public class Vertex <T> {
 	 */
 	public void addEdge(Vertex<T> otherVertex) {
 		adj.add(new Edge<T>(otherVertex));
+		otherVertex.inDegree += 1;
 	}
 
 	/**

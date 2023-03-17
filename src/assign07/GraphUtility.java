@@ -126,7 +126,9 @@ public class GraphUtility {
 		if(sources.size() != destinations.size())
 			throw new IllegalArgumentException("Sources and Destinations are of different sizes");
 		
-		return null;
+		var graph = new Graph<Type>(sources, destinations);
+		List<Type> output = graph.topoSort();
+		return output;
 	}
 
 	/**

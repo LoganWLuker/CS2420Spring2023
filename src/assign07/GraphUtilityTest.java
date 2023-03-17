@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-public class GraphUtilityTest {
+public class GraphUtilityTest{
 
 	@Test
 	void areConnectedTest()
@@ -40,7 +40,14 @@ public class GraphUtilityTest {
 		ArrayList<String> destinations = new ArrayList<String>();
 		GraphUtility.buildListsFromDot("lab08.tenVertices", sources, destinations);
 		System.out.println(GraphUtility.shortestPath(sources, destinations, "v0", "v2"));
-		
-		
+	}
+	
+	@Test
+	void sortTest()
+	{
+		ArrayList<String> sources = new ArrayList<String>();
+		ArrayList<String> destinations = new ArrayList<String>();
+		GraphUtility.buildListsFromDot("DAG1", sources, destinations);
+		GraphUtility.sort(sources, destinations);
 	}
 }

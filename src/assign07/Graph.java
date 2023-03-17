@@ -182,6 +182,34 @@ public class Graph <T> {
 		return path;
 	}
 	
+	public LinkedList<T> topoSort()
+	{
+		var output = new LinkedList<T>();
+		
+		Queue<Vertex<T>> doableTasks = new LinkedList<Vertex<T>>();
+		vertices.forEach((key,value) -> {
+			if(value.inDegree == 0)
+				doableTasks.offer(value);
+		});
+		
+		while(!doableTasks.isEmpty())
+		{
+			var task = doableTasks.poll();
+			output.add(task.getName());
+			
+			Iterator<Edge<T>> iter = task.edges();
+			iter.forEachRemaining((edge) -> {
+				var neighbor = edge.getOtherVertex();
+				neighbor.inDegree--;
+				if(neighbor.inDegree==0)
+					doableTasks.offer(neighbor);
+			});
+			
+		}
+		
+		return output;
+	}
+	
 	/**
 	 * Generates the DOT encoding of this graph as string, which can be 
 	 * pasted into http://www.webgraphviz.com to produce a visualization.
