@@ -52,7 +52,7 @@ public class GraphUtilityTimer {
 			for(int j = 0; j < timesToLoop; j++)
 			{
 				// areConnected
-				//GraphUtility.shortestPath(sources, destinations, sources.get(rng.nextInt(n)), destinations.get(rng.nextInt(n)));
+				//GraphUtility.areConnected(sources, destinations, sources.get(rng.nextInt(n)), destinations.get(rng.nextInt(n)));
 
 				// shortestPath
 				/*
