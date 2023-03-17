@@ -42,7 +42,12 @@ public class GraphUtilityTimer {
 			startTime = System.nanoTime();
 			for(int j = 0; j < timesToLoop; j++)
 			{
-				GraphUtility.areConnected(sources, destinations, sources.get(rng.nextInt(n)), destinations.get(rng.nextInt(n)));
+				try {
+					GraphUtility.shortestPath(sources, destinations, sources.get(rng.nextInt(n)), destinations.get(rng.nextInt(n)));
+				}
+				catch(IllegalArgumentException e) {
+					
+				}
 			}
 
 			midpointTime = System.nanoTime();
