@@ -39,7 +39,7 @@ public class GraphUtilityTest{
 		ArrayList<String> sources = new ArrayList<String>();
 		ArrayList<String> destinations = new ArrayList<String>();
 		GraphUtility.buildListsFromDot("lab08.tenVertices", sources, destinations);
-		System.out.println(GraphUtility.shortestPath(sources, destinations, "v0", "v2"));
+		//System.out.println(GraphUtility.shortestPath(sources, destinations, "v0", "v2"));
 	}
 	
 	@Test
@@ -47,7 +47,7 @@ public class GraphUtilityTest{
 	{
 		ArrayList<String> sources = new ArrayList<String>();
 		ArrayList<String> destinations = new ArrayList<String>();
-		GraphUtility.buildListsFromDot("DAG1", sources, destinations);
-		GraphUtility.sort(sources, destinations);
+		GraphUtility.buildListsFromDot("DAG1.txt", sources, destinations);
+		System.out.println(GraphUtility.sort(sources, destinations));
 	}
 }

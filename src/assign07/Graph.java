@@ -196,7 +196,6 @@ public class Graph <T> {
 		{
 			var task = doableTasks.poll();
 			output.add(task.getName());
-			
 			Iterator<Edge<T>> iter = task.edges();
 			iter.forEachRemaining((edge) -> {
 				var neighbor = edge.getOtherVertex();
@@ -204,10 +203,11 @@ public class Graph <T> {
 				if(neighbor.inDegree==0)
 					doableTasks.offer(neighbor);
 			});
-			
 		}
-		
-		return output;
+		if(output.size() == vertices.size())
+			return output;
+		else
+			throw new IllegalArgumentException("There's a loop, unfortunately");
 	}
 	
 	/**

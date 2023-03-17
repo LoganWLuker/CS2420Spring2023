@@ -31,38 +31,6 @@ public class GraphUtility {
 		var graph = new Graph<Type>(sources, destinations);
 		//return the depth search results with this data
 		return graph.DFSPrep(srcData,dstData);
-		
-//		int i = 0;
-//		boolean srcSaved = false, dstSaved = false;
-//		Vertex<Type> srcVert = new Vertex<Type>(srcData); // these aren't the real vertex objects we need
-//		Vertex<Type> dstVert = new Vertex<Type>(dstData); // "
-//		Graph<Type> graph = new Graph<Type>();
-//		
-//		for(Type src : sources)
-//		{
-//			graph.addEdge(src, destinations.get(i));
-//			if(src.equals(srcData) && srcSaved == false) {
-//				srcVert = graph.vertList.get(2*i);
-//				srcSaved = true;
-//			}
-//			if(destinations.get(i).equals(dstData) && dstSaved == false) { //should be O(1) if using arrayLists
-//				dstVert = graph.vertList.get(2*i + 1);
-//				dstSaved = true;
-//			}
-//			i++;
-//		}
-		
-		//call Graph.DFS
-		//set all the vertices to unvisited
-//		for(Vertex<Type> v : graph.vertList)
-//		{
-//			v.visited = false;
-//		}
-		//boolean nodes[] = new boolean[graph.getNumOfVertices()];
-		
-		
-		//boolean result = graph.DFS(srcData, dstData);
-		
 	}
 
 	/**
@@ -82,36 +50,6 @@ public class GraphUtility {
 		var graph = new Graph<Type>(sources, destinations);
 		List<Type> path = graph.BFSPrep(srcData, dstData); //might need to be linkedlist
 		return path;
-		
-//		int i = 0;
-//		boolean srcSaved = false, dstSaved = false;
-//		Vertex<Type> srcVert = new Vertex<Type>(srcData); // these aren't the real vertex objects we need
-//		Vertex<Type> dstVert = new Vertex<Type>(dstData); // "
-//		Graph<Type> graph = new Graph<Type>();
-				
-//		for(Type src : sources)
-//		{
-//			graph.addEdge(src, destinations.get(i));
-//			if(src.equals(srcData) && srcSaved == false) {
-//				srcVert = graph.vertList.get(2*i);
-//				srcSaved = true;
-//			}
-//			if(destinations.get(i).equals(dstData) && dstSaved == false) { //should be O(1) if using arrayLists
-//				dstVert = graph.vertList.get(2*i + 1);
-//				dstSaved = true;
-//			}
-//			i++;
-//		}
-				
-		//call Graph.BFS
-				
-		//set all the vertices to unvisited
-//		for(Vertex<Type> v : graph.vertList) {
-//			v.visited = false;
-//			v.cameFrom = null;
-//		}
-		
-		
 	}
 	
 	/**
