@@ -30,6 +30,12 @@ public class Graph <T> {
 		//vertList = new ArrayList<Vertex<T>>();
 		//edgeList = new ArrayList<Edge<T>>();
 	}
+	/**
+	 * Constructs a graph containing edges based on the specified sources and destinations
+	 * @throws	IllegalArgumentException if the parameters are different sizes
+	 * @param sources
+	 * @param destinations
+	 */
 	public Graph(List<T> sources, List<T> destinations)
 	{
 		if(sources.size() != destinations.size())
@@ -53,24 +59,20 @@ public class Graph <T> {
 		// if vertex already exists in graph, get its object
 		if(vertices.containsKey(name1)) {
 			vertex1 = vertices.get(name1);
-			//vertList.add(vertex1);
 		}
 		// else, create a new object and add to graph
 		else {
 			vertex1 = new Vertex<T>(name1);
 			vertices.put(name1, vertex1);
-			//vertList.add(vertex1);
 		}
 
 		Vertex<T> vertex2;
 		if(vertices.containsKey(name2)) {
 			vertex2 = vertices.get(name2);
-			//vertList.add(vertex2);
 		}
 		else {
 			vertex2 = new Vertex<T>(name2);
 			vertices.put(name2, vertex2);
-			//vertList.add(vertex2);
 		}
 
 		// add new directed edge from vertex1 to vertex2
@@ -171,7 +173,13 @@ public class Graph <T> {
 		}
 		throw new IllegalArgumentException("no path exists");
 	}
-	
+	/**
+	 * Reconstructs the path taken from the source to the target
+	 * to return it to the user
+	 * @param target
+	 * @param start
+	 * @return	linked list containing the path
+	 */
 	public LinkedList<T> reconstructPath(Vertex<T> target, Vertex<T> start) {
 		LinkedList<T> path = new LinkedList<T>();
 		for(Vertex<T> v = target; !v.equals(start); v = v.cameFrom)
@@ -181,7 +189,10 @@ public class Graph <T> {
 		path.addFirst(start.getName());
 		return path;
 	}
-	
+	/**
+	 * Performs a topological sort on the graph
+	 * @return	A sorted linked list
+	 */
 	public LinkedList<T> topoSort()
 	{
 		var output = new LinkedList<T>();
@@ -207,7 +218,7 @@ public class Graph <T> {
 		if(output.size() == vertices.size())
 			return output;
 		else
-			throw new IllegalArgumentException("There's a loop, unfortunately");
+			throw new IllegalArgumentException("Graph cannot contain a loop");
 	}
 	
 	/**

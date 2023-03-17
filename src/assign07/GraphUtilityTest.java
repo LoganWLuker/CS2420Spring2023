@@ -3,7 +3,12 @@ package assign07;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-
+/**
+ * Tests for the utility methods
+ * 
+ * @author Bruce Crockett, & Logan Luker
+ * @version March 14, 2023
+ */
 public class GraphUtilityTest{
 
 	@Test
@@ -49,5 +54,13 @@ public class GraphUtilityTest{
 		ArrayList<String> destinations = new ArrayList<String>();
 		GraphUtility.buildListsFromDot("DAG1.txt", sources, destinations);
 		System.out.println(GraphUtility.sort(sources, destinations));
+	}
+	@Test
+	void emptyTest()
+	{
+		ArrayList<String> sources = new ArrayList<String>();
+		ArrayList<String> destinations = new ArrayList<String>();
+		//GraphUtility.areConnected(sources, destinations, null, null);
+
 	}
 }

@@ -15,14 +15,18 @@ import java.util.Scanner;
 public class GraphUtility {
 
 	/**
-	 * 
+	 * Returns true if a vertex containing srcData is connected to a vertex containing dstData
+	 * in a graph created with given list of sources and given list of destinations
+	 * returns false otherwise
+	 * uses Depth-first search
 	 * @param <Type>
 	 * @param sources
 	 * @param destinations
 	 * @param srcData
 	 * @param dstData
-	 * @return
-	 * @throws IllegalArgumentException
+	 * @return	True if there is a connection, false otherwise
+	 * @throws IllegalArgumentException if list sizes are unequal, 
+	 * and if srcData or dstData cannot be matched with a vertex
 	 */
 	public static <Type> boolean areConnected(List<Type> sources, List<Type> destinations, Type srcData, Type dstData)
 			throws IllegalArgumentException {
@@ -34,14 +38,18 @@ public class GraphUtility {
 	}
 
 	/**
-	 * 
+	 * Finds and returns the shortest path between a source and a destination.
+	 * Graph created with given lists of sources and destinations
+	 * uses Breadth-first Search
 	 * @param <Type>
 	 * @param sources
 	 * @param destinations
 	 * @param srcData
 	 * @param dstData
-	 * @return
-	 * @throws IllegalArgumentException
+	 * @return a linked list containing the shortest path
+	 * @throws IllegalArgumentException if list sizes are unequal, 
+	 * and if srcData or dstData cannot be matched with a vertex,
+	 * and if there is no path between the source and destination
 	 */
 	public static <Type> List<Type> shortestPath(List<Type> sources, List<Type> destinations, Type srcData, Type dstData)
 			throws IllegalArgumentException {
@@ -53,12 +61,12 @@ public class GraphUtility {
 	}
 	
 	/**
-	 * 
+	 * Performs a topological sort on a graph based on given lists of sources and destinations
 	 * @param <Type>
 	 * @param sources
 	 * @param destinations
-	 * @return
-	 * @throws IllegalArgumentException
+	 * @return	a linked list containing the sorted vertices
+	 * @throws IllegalArgumentException if the graph contains a cycle
 	 */
 	public static <Type> List<Type> sort(List<Type> sources, List<Type> destinations) throws IllegalArgumentException {
 		if(sources.size() != destinations.size())
