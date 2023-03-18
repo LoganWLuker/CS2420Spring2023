@@ -6,16 +6,28 @@ import java.util.Random;
 
 /**
  * Method for computing the median of an int[], along with some other helpers
- * Author: Ben Jones
+ * Author: Ben Jones and Logan Luker
  **/
 public class Median {
-	
+	/**
+	 * Driver method for median
+	 * Calculates the end and uses 0 as the beginning
+	 * @param arr	The array to find the median of
+	 * @return	the result of the main median() method
+	 */
 	public static int median(int[] arr)
 	{
 		int begin = 0;
 		int end = arr.length;
 		return median(arr,begin,end);
 	}
+	/**
+	 * Finds the median for a given array using the QuickSelect algorithm
+	 * @param arr	the array to find the median of
+	 * @param begin	the place to start from; changes within the recursion
+	 * @param end	the place to end; changes within the recursion
+	 * @return	the median of the array/sub-array as an integer
+	 */
 	private static int median(int[] arr, int begin, int end)
 	{
 		int pivotIndex = getPivotIndex(begin,end);
@@ -87,13 +99,21 @@ public class Median {
         swap(arr, left, end -1);
         return left;
     }
-
+    /**
+     * swap 2 elements of an array
+     * @param arr
+     * @param i
+     * @param j
+     */
     private static void swap(int[] arr, int i, int j){
         var tmp = arr[i];
         arr[i] = arr[j];
         arr[j] = tmp;
     }
-
+    /**
+     * shuffle the elements of a given array
+     * @param arr	array to shuffle
+     */
     public static void shuffle(int[] arr){
         Random r = new Random();
         for(var i = arr.length - 1; i > 0; i--){

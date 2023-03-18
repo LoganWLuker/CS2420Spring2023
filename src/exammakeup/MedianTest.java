@@ -7,9 +7,19 @@ import java.util.Arrays;
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
-
+/**
+ * Tests for the Median method
+ * @author Logan Luker
+ *
+ */
 public class MedianTest
 {
+	/**
+	 * Checks that everything before the median is less than it,
+	 * and everything after the median is greater than it for a given array
+	 * @param arr	the array to check
+	 * @return	true if array is arranged correctly, false if it is not
+	 */
 	boolean isSortedToMedian(int[] arr)
 	{
 		for(int i=0; i<(arr.length/2);i++)
@@ -23,19 +33,6 @@ public class MedianTest
 				return false;
 		}
 		return true;
-	}
-	@Test
-	void medianTest()
-	{
-//		int[] arr = new int[]{684,891,5,98,561,81261,6842,651};
-//		System.out.println(Median.median(arr));	//0,1,2,3,4,5
-//		for(int i : arr)
-//			System.out.print(i + ", ");
-//		System.out.println("\n");
-//		ArrayList<Integer> array = new ArrayList<Integer>(Arrays.asList(684,891,5,98,561,81261,6842,651));
-//		array.sort(null);
-//		System.out.println(array);
-//		System.out.println(array.get(array.size()/2));
 	}
 	@Test
 	void singleMedianTest()
@@ -88,6 +85,20 @@ public class MedianTest
 		assertTrue(isSortedToMedian(arr));
 	}
 	@Test
+	void verySmallMedianTest()
+	{
+		int[] arr = new int[] {2,1};
+		assertEquals(2,Median.median(arr));
+		assertTrue(isSortedToMedian(arr));
+	}
+	@Test
+	void smallMedianTest()
+	{
+		int[] arr = new int[] {2,1,3};
+		assertEquals(2,Median.median(arr));
+		assertTrue(isSortedToMedian(arr));
+	}
+	@Test
 	void bigArrayMedianTest()
 	{
 		Random rng = new Random();
@@ -102,15 +113,26 @@ public class MedianTest
 		arrList.sort(null);
 		int expected = arrList.get(arrList.size()/2);
 		int result = Median.median(arr);
-		//prints the results
-//		for(int i : arr)
-//			System.out.print(i + ", ");
-//		
-//		System.out.println("\n");
-//		System.out.println(arrList);
+		assertEquals(expected,result);
+		assertTrue(isSortedToMedian(arr));
+	}
+	@Test
+	void veryBigArrayMedianTest()
+	{
+		Random rng = new Random();
+		int[] arr = new int[100000];
+		var arrList = new ArrayList<Integer>();
+		for(int i = 0; i < 100000; i++)
+		{
+			int element = rng.nextInt();
+			arr[i] = element;
+			arrList.add(element);
+		}
+		arrList.sort(null);
+		int expected = arrList.get(arrList.size()/2);
+		int result = Median.median(arr);
 		assertEquals(expected,result);
 		assertTrue(isSortedToMedian(arr));
 	}
 	
 }
-//5,98,561,651,684,891,6842,81261
