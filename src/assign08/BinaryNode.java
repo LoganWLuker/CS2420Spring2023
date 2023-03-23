@@ -4,7 +4,7 @@ package assign08;
  * Represents a generically-typed binary tree node. Each binary node contains
  * data, a reference to the left child, and a reference to the right child.
  * 
- * @author Erin Parker and ??
+ * @author Erin Parker, Logan Luker and Bruce Crockett
  * @version March 18, 2022
  */
 public class BinaryNode<Type> {
@@ -92,17 +92,8 @@ public class BinaryNode<Type> {
 	 * node. Consider a tree with a single node to have a height of zero.
 	 */
 	public int height() {
-		if(leftChild == null && rightChild == null)
+		if((leftChild == null && rightChild == null) || this == null)
 			return 0;
-		else
-		{
-		int lHeight = leftChild.height();
-		int rHeight = rightChild.height();
-		
-		if(lHeight > rHeight)
-			return lHeight+1;
-		else
-			return rHeight+1;
-		}
+		return (Math.max(leftChild == null ? 0 : leftChild.height(), rightChild == null ? 0 : rightChild.height())+1);
 	}
 }

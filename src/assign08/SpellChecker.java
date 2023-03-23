@@ -51,6 +51,7 @@ public class SpellChecker {
 	 * @param word - the String to be added to the dictionary
 	 */
 	public void addToDictionary(String word) {
+		dictionary.add(word.toUpperCase());
 		// FILL IN
 	}
 
