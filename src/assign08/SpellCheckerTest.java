@@ -112,10 +112,22 @@ public class SpellCheckerTest
 	void removeAllLargeTreeTest()
 	{
 		largeTree.removeAll(Arrays.asList(8,7,9));
+		assertFalse(largeTree.isEmpty());
 		assertFalse(largeTree.contains(8));
 		assertFalse(largeTree.contains(7));
 		assertFalse(largeTree.contains(9));
 		assertTrue(largeTree.containsAll(Arrays.asList(5,6,10,11)));
+	}
+	@Test
+	void removeAllTest()
+	{
+		largeTree.removeAll(Arrays.asList(8,7,9,5,6,10,11));
+		assertFalse(largeTree.contains(8));
+		assertFalse(largeTree.contains(7));
+		assertFalse(largeTree.contains(9));
+		assertFalse(largeTree.containsAll(Arrays.asList(5,6,10,11)));
+		assertEquals(0, largeTree.size());
+		assertTrue(largeTree.isEmpty());
 	}
 	@Test
 	void sizeLargeTreeTest()
@@ -126,8 +138,15 @@ public class SpellCheckerTest
 	void toArrayListTest()
 	{
 		largeTree.toDot();
+		emptyTree.add("d");
 		System.out.println(largeTree.toArrayList());
 		System.out.println(smallTree.toArrayList());
+		System.out.println(emptyTree.toArrayList());
+	}
+	@Test
+	void firstTest()
+	{
+		assertEquals(5,largeTree.first());
 	}
 	
 }

@@ -3,7 +3,12 @@ package assign08;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.NoSuchElementException;
-
+/**
+ * Class representing a generic binary search tree and It's methods
+ * @author Logan Luker and Bruce Crockett
+ *
+ * @param <Type>
+ */
 public class BinarySearchTree<Type extends Comparable<? super Type>> implements SortedSet<Type>
 {
 	private BinaryNode<Type> root;
@@ -49,9 +54,9 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 			root = new BinaryNode<Type>(item);
 			return root;
 		}
-		else if(item.compareTo(root.getData()) < 0)	//if it's less, move left
+		if(item.compareTo(root.getData()) < 0)	//if it's less, move left
 			root.setLeftChild(addRec(root.getLeftChild(), item));	//recurse
-		else if(item.compareTo(root.getData()) > 0)	//if it's more, move right
+		if(item.compareTo(root.getData()) > 0)	//if it's more, move right
 			root.setRightChild(addRec(root.getRightChild(), item));	//recurse
 
 		if(root.getData() == item)	//check if nothing changed
@@ -267,8 +272,8 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 		return arr;
 	}
 	/**
-	 * Method to visualize the tree
-	 * driver for the recursive visualize method
+	 * Method to visualize the tree as DOT
+	 * driver for the recursive toDot method
 	 */
 	public void toDot()
 	{
@@ -278,7 +283,7 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 	}
 	/**
 	 * Recursive method to visualize a tree
-	 * prints out the graph in a simple format
+	 * prints out the graph in DOT format
 	 * @param root
 	 */
 	private void toDotRec(BinaryNode<Type> root)
