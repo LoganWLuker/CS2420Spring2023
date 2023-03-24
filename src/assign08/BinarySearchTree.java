@@ -210,23 +210,60 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 	@Override
 	public int size()
 	{
-		
-		// TODO Auto-generated method stub
-		return root.height();
+		if(root == null)
+			return 0;
+		return sizeRec(root);
 	}
-
+	/**
+	 * Recursive method for finding the size of a tree
+	 * @param root
+	 * @param toReturn
+	 * @return	the size
+	 */
+	private int sizeRec(BinaryNode<Type> root)
+	{
+		if(root == null)
+			return 0;
+		
+		return sizeRec(root.getLeftChild())+ 1 + sizeRec(root.getRightChild());
+	}
 	@Override
 	public ArrayList<Type> toArrayList()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		var arr = new ArrayList<Type>();
+		return toArrayListRec(root,arr);
 	}
+	/**
+	 * Recursive method for returning a sorted array list
+	 * containing all of the items in a tree
+	 * @param root
+	 * @param arr
+	 * @return
+	 */
+	private ArrayList<Type> toArrayListRec(BinaryNode<Type> root, ArrayList<Type> arr)
+	{
+		if(root == null)
+			return arr;
+		toArrayListRec(root.getLeftChild(), arr);
+		arr.add(root.getData());
+		toArrayListRec(root.getRightChild(), arr);
+		return arr;
+	}
+	/**
+	 * Method to visualize the tree
+	 * driver for the recursive visualize method
+	 */
 	public void visualize()
 	{
 		if(root == null)
 			System.out.println("empty tree");
 		visualizeRec(root);
 	}
+	/**
+	 * Recursive method to visualize a tree
+	 * prints out the graph in a simple format
+	 * @param root
+	 */
 	private void visualizeRec(BinaryNode<Type> root)
 	{
 		if(root == null)

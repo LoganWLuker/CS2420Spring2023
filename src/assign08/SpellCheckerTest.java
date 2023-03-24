@@ -47,12 +47,12 @@ public class SpellCheckerTest
 		emptyTree.add("Hello");
 		assertTrue(emptyTree.contains("Hello"));
 	}
-//	@Test
-//	void addEmptyTreeSizeTest()
-//	{
-//		emptyTree.add("Hello");
-//		assertEquals(1,emptyTree.size());
-//	}
+	@Test
+	void addEmptyTreeSizeTest()
+	{
+		emptyTree.add("Hello");
+		assertEquals(1,emptyTree.size());
+	}
 	@Test
 	void addSmallTreeTrueTest()
 	{
@@ -107,4 +107,15 @@ public class SpellCheckerTest
 		assertFalse(largeTree.contains(9));
 		assertTrue(largeTree.containsAll(Arrays.asList(5,6,10,11)));
 	}
+	@Test
+	void sizeLargeTreeTest()
+	{
+		assertEquals(7,largeTree.size());
+	}
+	@Test
+	void toArrayListTest()
+	{
+		System.out.println(largeTree.toArrayList());
+	}
+	
 }
