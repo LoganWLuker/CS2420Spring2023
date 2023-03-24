@@ -7,8 +7,8 @@ import java.util.NoSuchElementException;
 public class BinarySearchTree<Type extends Comparable<? super Type>> implements SortedSet<Type>
 {
 	private BinaryNode<Type> root;
-	private boolean operated = true;
-	private boolean removed = false;
+	private boolean operated;
+	private boolean operatedAll;
 	/**
 	 * Default Constructor
 	 */
@@ -28,12 +28,13 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 	@Override
 	public boolean add(Type item)
 	{
-		//assume this call will change the list
+		//assume this call will change the tree
 		operated = true;
-		if(item == null)	//if the given item is null, 
-			operated = false;
+		if(item == null)	//if the given item is null, nothing will change so return false
+			return false;
+		//call the recursive method and set root equal to it
 		root = addRec(root, item);
-		return operated;
+		return operated;	//did it change anything
 	}
 	/**
 	 * Recursive method for adding a node to the tree
@@ -43,30 +44,34 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 	 */
 	private BinaryNode<Type> addRec(BinaryNode<Type> root, Type item)
 	{
-		if(root == null)
+		if(root == null)	//base case
 		{
 			root = new BinaryNode<Type>(item);
 			return root;
 		}
-		else if(item.compareTo(root.getData()) < 0)
-			root.setLeftChild(addRec(root.getLeftChild(), item));
-		else if(item.compareTo(root.getData()) > 0)
-			root.setRightChild(addRec(root.getRightChild(), item));
-		//return unchanged root
-		if(root.getData() == item)
-			operated = false;
-		return root;
+		else if(item.compareTo(root.getData()) < 0)	//if it's less, move left
+			root.setLeftChild(addRec(root.getLeftChild(), item));	//recurse
+		else if(item.compareTo(root.getData()) > 0)	//if it's more, move right
+			root.setRightChild(addRec(root.getRightChild(), item));	//recurse
+
+		if(root.getData() == item)	//check if nothing changed
+			operated = false;	//if nothing changed, prepare to return false in add()
+		return root;	//return new root value
 	}
 	@Override
 	public boolean addAll(Collection<? extends Type> items)
 	{
+		operatedAll = false;
 		var iter = items.iterator();
+		//if there's nothing in the collection, nothing should change
 		if(iter.hasNext() == false)
 			return false;
+		//for each item in the collection, add it
 		iter.forEachRemaining((item) -> {
-			add(item);
+			if(add(item))
+				operatedAll = true;
 		});
-		return operated;
+		return operatedAll;
 	}
 
 	@Override
@@ -146,30 +151,35 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 		root = removeRec(root, item);
 		return operated;
 	}
-
+	/**
+	 * Recursive method for removing an item from a tree
+	 * @param root
+	 * @param item
+	 * @return	updated root
+	 */
 	private BinaryNode<Type> removeRec(BinaryNode<Type> root, Type item)
 	{
-		if(root == null)
+		if(root == null)	//base case
 			return root;
-		int comp = item.compareTo(root.getData());
-		if(comp < 0)
+		int comp = item.compareTo(root.getData());	//compare item to current node
+		if(comp < 0)	//if It's less, move left
 			root.setLeftChild(removeRec(root.getLeftChild(), item));
-		else if(comp > 0)
+		else if(comp > 0)	//if It's greater, move right
 			root.setRightChild(removeRec(root.getRightChild(), item));
 		else
-		{
-			operated = true;
-			if(root.getLeftChild() == null && root.getRightChild() == null)
-				root = null;
-			else if(root.getRightChild() != null)
+		{	//found the item
+			operated = true;	//since we will now change the tree, prepare to return true in remove()
+			if(root.getLeftChild() == null && root.getRightChild() == null)	//if It's children are both null,
+				root = null;	//just remove it by setting it to null
+			else if(root.getRightChild() != null)	//if it has a right child, find the left-most value from the right child to replace it
 			{
-				root.setData(successor(root));
-				root.setRightChild(removeRec(root.getRightChild(), root.getData()));
+				root.setData(successor(root));	//set the data as the replacement's data
+				root.setRightChild(removeRec(root.getRightChild(), root.getData()));	//remove the replacement node so there's no duplicate data
 			}
-			else
+			else	//if it has a left child, find the right-most value from the left child to replace it
 			{
-				root.setData(predecessor(root));
-				root.setLeftChild(removeRec(root.getLeftChild(),root.getData()));
+				root.setData(predecessor(root));	//set the data as the replacement's data
+				root.setLeftChild(removeRec(root.getLeftChild(),root.getData()));	//remove the replacement node so there's no duplicate data
 			}
 		}
 		return root;
@@ -203,15 +213,15 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 	@Override
 	public boolean removeAll(Collection<? extends Type> items)
 	{
-		removed = false;
+		operatedAll = false;
 		var iter = items.iterator();
 		if(iter.hasNext() == false)
 			return false;
 		iter.forEachRemaining((item) -> {
 			if(remove(item))
-				removed = true;
+				operatedAll = true;
 		});
-		return removed;
+		return operatedAll;
 	}
 
 	@Override
@@ -231,7 +241,7 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 	{
 		if(root == null)
 			return 0;
-		
+
 		return sizeRec(root.getLeftChild())+ 1 + sizeRec(root.getRightChild());
 	}
 	@Override
@@ -251,39 +261,39 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 	{
 		if(root == null)
 			return arr;
-		toArrayListRec(root.getLeftChild(), arr);
-		arr.add(root.getData());
-		toArrayListRec(root.getRightChild(), arr);
+		toArrayListRec(root.getLeftChild(), arr);	//move left
+		arr.add(root.getData());	//before moving right, add your left value
+		toArrayListRec(root.getRightChild(), arr);	//move right
 		return arr;
 	}
 	/**
 	 * Method to visualize the tree
 	 * driver for the recursive visualize method
 	 */
-	public void visualize()
+	public void toDot()
 	{
 		if(root == null)
 			System.out.println("empty tree");
-		visualizeRec(root);
+		toDotRec(root);
 	}
 	/**
 	 * Recursive method to visualize a tree
 	 * prints out the graph in a simple format
 	 * @param root
 	 */
-	private void visualizeRec(BinaryNode<Type> root)
+	private void toDotRec(BinaryNode<Type> root)
 	{
 		if(root == null)
 			return;
 		if(root.getLeftChild() != null)
 		{
 			System.out.print(root.getData().toString() + "--" + root.getLeftChild().getData().toString() + "\n");
-			visualizeRec(root.getLeftChild());
+			toDotRec(root.getLeftChild());
 		}
 		if(root.getRightChild() != null)
 		{
 			System.out.print(root.getData().toString() + "--" + root.getRightChild().getData().toString() + "\n");
-			visualizeRec(root.getRightChild());
+			toDotRec(root.getRightChild());
 		}
 	}
 

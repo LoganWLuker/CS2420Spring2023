@@ -64,6 +64,16 @@ public class SpellCheckerTest
 		assertTrue(emptyTree.addAll(Arrays.asList("a","b","c")));
 	}
 	@Test
+	void addAllSmallTreeTest()
+	{
+		assertTrue(smallTree.addAll(Arrays.asList("a","b","Bc")));
+	}
+	@Test
+	void addAllSmallTreeFalseTest()
+	{
+		assertFalse(smallTree.addAll(Arrays.asList("Ab","Bc","Cd")));
+	}
+	@Test
 	void addAllEmptyFalseTest()
 	{
 		assertFalse(emptyTree.addAll(Arrays.asList()));
@@ -115,7 +125,9 @@ public class SpellCheckerTest
 	@Test
 	void toArrayListTest()
 	{
+		largeTree.toDot();
 		System.out.println(largeTree.toArrayList());
+		System.out.println(smallTree.toArrayList());
 	}
 	
 }
