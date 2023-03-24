@@ -52,7 +52,6 @@ public class SpellChecker {
 	 */
 	public void addToDictionary(String word) {
 		dictionary.add(word.toUpperCase());
-		// FILL IN
 	}
 
 	/**
@@ -61,7 +60,7 @@ public class SpellChecker {
 	 * @param word - the String to be removed from the dictionary
 	 */
 	public void removeFromDictionary(String word) {
-		// FILL IN
+		dictionary.remove(word);
 	}
 
 	/**
@@ -75,9 +74,17 @@ public class SpellChecker {
 
 		List<String> wordsToCheck = readFromFile(documentFile);
 
-		// FILL IN -- do not return null
+		var output = new ArrayList<String>();
+		
+		for(String word : wordsToCheck)
+		{
+			if(!dictionary.contains(word))
+			{
+				output.add(word);
+			}
+		}
 
-		return null;
+		return output;
 	}
 
 	/**
@@ -86,7 +93,10 @@ public class SpellChecker {
 	 * @param words - the List of Strings to be added to the dictionary
 	 */
 	private void buildDictionary(List<String> words) {
-		// FILL IN
+		for(String word : words)
+		{
+			dictionary.add(word);
+		}
 	}
 
 	/**
