@@ -10,8 +10,8 @@ import java.util.Scanner;
  * Represents a "dictionary" of strings using a binary search tree and offers
  * methods for spell-checking documents.
  * 
- * @author Erin Parker, Logan Luker, and Bruce Crockett
- * @version March 23, 2023
+ * @author Erin Parker and ??
+ * @version March 17, 2022
  */
 public class SpellChecker {
 
@@ -51,7 +51,7 @@ public class SpellChecker {
 	 * @param word - the String to be added to the dictionary
 	 */
 	public void addToDictionary(String word) {
-		dictionary.add(word.toUpperCase());
+		dictionary.add(word.toLowerCase());
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class SpellChecker {
 	 * @param word - the String to be removed from the dictionary
 	 */
 	public void removeFromDictionary(String word) {
-		dictionary.remove(word);
+		dictionary.remove(word.toLowerCase());
 	}
 
 	/**
@@ -70,21 +70,28 @@ public class SpellChecker {
 	 *                      dictionary
 	 * @return a List of misspelled words
 	 */
-	public List<String> spellCheck(File documentFile) {
+	public List<String> spellCheck(File documentFile) {	// FILL IN -do not return null
 
 		List<String> wordsToCheck = readFromFile(documentFile);
-
-		var output = new ArrayList<String>();
-		
-		for(String word : wordsToCheck)
+		var iter = wordsToCheck.iterator();
+		while(iter.hasNext())
 		{
-			if(!dictionary.contains(word))
-			{
-				output.add(word);
-			}
+			if(dictionary.contains(iter.next()))
+				iter.remove();
 		}
-
-		return output;
+		return wordsToCheck;
+		
+//		var output = new ArrayList<String>();
+//		
+//		for(String word : wordsToCheck)
+//		{
+//			if(!dictionary.contains(word))
+//			{
+//				output.add(word);
+//			}
+//		}
+//
+//		return output;
 	}
 
 	/**
@@ -93,10 +100,11 @@ public class SpellChecker {
 	 * @param words - the List of Strings to be added to the dictionary
 	 */
 	private void buildDictionary(List<String> words) {
-		for(String word : words)
-		{
-			dictionary.add(word);
-		}
+		var iter = words.iterator();
+		iter.forEachRemaining((word) -> {
+			word.toLowerCase();
+		});
+		dictionary.addAll(words);
 	}
 
 	/**

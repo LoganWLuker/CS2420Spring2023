@@ -9,11 +9,17 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 	private BinaryNode<Type> root;
 	private boolean operated = true;
 	private boolean removed = false;
-	
+	/**
+	 * Default Constructor
+	 */
 	BinarySearchTree()
 	{
 		root = null;
 	}
+	/**
+	 * Constructor with initial value
+	 * @param value	value to start with
+	 */
 	BinarySearchTree(Type value)
 	{
 		root = new BinaryNode<Type>(value);
@@ -22,8 +28,9 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 	@Override
 	public boolean add(Type item)
 	{
+		//assume this call will change the list
 		operated = true;
-		if(item == null)
+		if(item == null)	//if the given item is null, 
 			operated = false;
 		root = addRec(root, item);
 		return operated;
