@@ -10,8 +10,8 @@ import java.util.Scanner;
  * Represents a "dictionary" of strings using a binary search tree and offers
  * methods for spell-checking documents.
  * 
- * @author Erin Parker and ??
- * @version March 17, 2022
+ * @author Erin Parker, Logan Luker, and Bruce Crockett
+ * @version March 23, 2023
  */
 public class SpellChecker {
 
