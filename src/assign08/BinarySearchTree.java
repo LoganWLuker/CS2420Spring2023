@@ -88,9 +88,21 @@ public class BinarySearchTree<Type extends Comparable<? super Type>> implements 
 	@Override
 	public boolean contains(Type item)
 	{
-		if(root == null)
-			return false;
-		return containsRec(root, item);
+		var node = root;
+		while (node != null)
+		{
+			int comp = item.compareTo(node.getData());
+			if (comp == 0)
+				return true;
+			else if(comp < 0)
+				node = node.getLeftChild();
+			else
+				node = node.getRightChild();
+		}
+		return false;
+//		if(root == null)
+//			return false;
+//		return containsRec(root, item);
 	}
 	/**
 	 * Recursive method to determine if the tree contains an item
