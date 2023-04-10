@@ -1,6 +1,7 @@
 package assign09;
 
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 /**
  * This class provides a simple representation for a University of Utah student.
@@ -74,8 +75,6 @@ public class StudentBadHash {
 	}
 
 	public int hashCode() {
-		// FILL IN and add method comment
-		
-		return 0;
+		return uid;
 	}
 }
