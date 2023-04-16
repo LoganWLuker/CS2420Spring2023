@@ -12,7 +12,7 @@ import java.util.Objects;
  * @author Erin Parker and ?
  * @version ?
  */
-public class StudentBadHash {
+public class StudentMediumHash {
 
 	private int uid;
 	private String firstName;
@@ -25,7 +25,7 @@ public class StudentBadHash {
 	 * @param firstName
 	 * @param lastName
 	 */
-	public StudentBadHash(int uid, String firstName, String lastName) {
+	public StudentMediumHash(int uid, String firstName, String lastName) {
 		this.uid = uid;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -58,10 +58,10 @@ public class StudentBadHash {
 	 */
 	public boolean equals(Object other) {
 		// change to StudentMediumHash and StudentGoodHash for two new classes
-		if(!(other instanceof StudentBadHash))
+		if(!(other instanceof StudentMediumHash))
 			return false;
 
-		StudentBadHash rhs = (StudentBadHash) other;
+		StudentMediumHash rhs = (StudentMediumHash) other;
 
 		return this.uid == rhs.uid && this.firstName.equals(rhs.firstName) && this.lastName.equals(rhs.lastName);
 	}
@@ -75,6 +75,6 @@ public class StudentBadHash {
 	}
 
 	public int hashCode() {
-		return firstName.length();
+		return Math.abs(Objects.hash(uid,firstName,lastName));
 	}
 }

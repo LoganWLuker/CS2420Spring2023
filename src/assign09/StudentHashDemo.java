@@ -21,8 +21,6 @@ public class StudentHashDemo {
 		studentGpaTable.put(ada, 3.5);
 		studentGpaTable.put(edsger, 3.8);
 		studentGpaTable.put(grace, 4.0);
-		studentGpaTable.remove(grace);
-		studentGpaTable.remove(alan);
 		
 		for(MapEntry<StudentBadHash, Double> e : studentGpaTable.entries())
 			System.out.println("Student " + e.getKey() + " has GPA " + e.getValue() + ".");

@@ -110,7 +110,7 @@ public class HashTable <K, V> implements Map<K, V>
 		int index = hash(key);
         MapEntry<K, V> entry = table.get(index);
         while (entry != null) {
-            if (entry.getKey().equals(key)) {
+            if (entry.getKey() != null && entry.getKey().equals(key)) {
                 return true;
             }
             entry = getNextEntry(index, key);

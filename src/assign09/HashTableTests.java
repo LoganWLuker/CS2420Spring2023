@@ -59,6 +59,12 @@ public class HashTableTests {
         assertEquals(Integer.valueOf(3), hashTable.remove("c"));
         assertNull(hashTable.get("c"));
     }
+    @Test
+    public void testRemove2() {
+    	hashTable.put("a", 1);
+    	hashTable.remove("a");
+    	assertEquals(0,hashTable.size());
+    }
 
     @Test
     public void testContainsKey() {
